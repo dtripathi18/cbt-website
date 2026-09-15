@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CBT — Centre of Excellence for Biopharmaceutical Technology, IIT Delhi</title>
+<meta name="description" content="Centre of Excellence for Biopharmaceutical Technology (CBT), IIT Delhi — a DBT-funded centre delivering innovation in biopharmaceutical manufacturing." />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/logo/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/logo/favicon-16.png" />
+<link rel="apple-touch-icon" href="assets/images/logo/apple-touch-icon.png" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img id="headerLogo" src="" alt="CBT logo" />
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="main-nav" id="mainNav">
+      <ul id="navList"></ul>
+    </nav>
+  </div>
+</header>
+
+<!--
+  TODO (future work): research.html, startups.html, partners.html, people.html,
+  news-events.html and contact.html still need to be built (publications.html
+  is done).
+-->
+
+<section class="hero">
+  <div class="hero-slides" id="heroSlides"></div>
+  <div class="container">
+    <span class="eyebrow" id="heroEyebrow"></span>
+    <h1 id="heroHeading"></h1>
+    <p class="sub" id="heroSub"></p>
+  </div>
+  <button class="hero-arrow hero-arrow--prev" id="heroPrev" aria-label="Previous slide">&#8249;</button>
+  <button class="hero-arrow hero-arrow--next" id="heroNext" aria-label="Next slide">&#8250;</button>
+</section>
+
+<div class="course-banner">
+  <div class="container">
+    <div class="cb-card">
+      <div class="cb-text">
+        <span class="cb-badge">Registration Open</span>
+        <div class="cb-edition" id="cbEdition"></div>
+        <div class="cb-tagline" id="cbTagline"></div>
+      </div>
+      <div class="cb-actions">
+        <a class="cb-about" id="cbAboutBtn" href="#"></a>
+        <a class="cb-register" id="cbRegisterBtn" href="#"></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="contact-cta">
+  <div class="container">
+    <h2 id="ccHeading"></h2>
+    <p class="cc-contact" id="ccContact"></p>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="container about-grid">
+    <div class="about-copy">
+      <span class="eyebrow">About Us</span>
+      <h2 id="aboutHeading"></h2>
+      <p id="aboutBody"></p>
+    </div>
+    <div class="about-cards">
+      <div class="about-card">
+        <h4>Our Mission</h4>
+        <p id="aboutMission"></p>
+      </div>
+      <div class="about-card">
+        <h4>Our Vision</h4>
+        <p id="aboutVision"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt" id="news">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">News &amp; Events</span>
+      <h2>Latest From CBT</h2>
+    </div>
+    <div class="news-grid" id="newsGrid"></div>
+    <div class="section-foot">
+      <a class="btn-ghost" href="news-events.html">View all news &amp; events</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="research">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Research</span>
+      <h2>Research Highlights</h2>
+      <p>Focus areas spanning the full biopharmaceutical development pipeline — from strain to clinic.</p>
+    </div>
+  </div>
+  <div class="carousel" id="researchCarousel">
+    <button class="carousel-arrow carousel-arrow--prev" id="researchPrev" aria-label="Previous research">&#8249;</button>
+    <div class="carousel-viewport">
+      <div class="carousel-track" id="researchTrack"></div>
+    </div>
+    <button class="carousel-arrow carousel-arrow--next" id="researchNext" aria-label="Next research">&#8250;</button>
+  </div>
+  <div class="container">
+    <div class="section-foot">
+      <a class="btn-ghost" href="research.html">View all research</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt" id="gallery">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Gallery</span>
+      <h2>Through the Years</h2>
+      <p>Moments from CBT courses and events over the years. Click a year to open the slideshow.</p>
+    </div>
+    <div class="gallery-deck" id="galleryDeck"></div>
+  </div>
+</section>
+
+<section class="section" id="partners">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Partners</span>
+      <h2>Collaborators</h2>
+      <p>40+ partnerships across industry, academia, and public institutions in India and worldwide.</p>
+    </div>
+  </div>
+  <div class="carousel" id="partnerCarousel">
+    <button class="carousel-arrow carousel-arrow--prev" id="partnerPrev" aria-label="Previous partners">&#8249;</button>
+    <div class="carousel-viewport">
+      <div class="carousel-track" id="partnerTrack"></div>
+    </div>
+    <button class="carousel-arrow carousel-arrow--next" id="partnerNext" aria-label="Next partners">&#8250;</button>
+  </div>
+</section>
+
+<div class="gallery-modal" id="galleryModal" aria-hidden="true">
+  <div class="gm-backdrop" id="galleryModalBackdrop"></div>
+  <div class="gm-dialog" role="dialog" aria-modal="true" aria-label="Gallery slideshow">
+    <button class="gm-close" id="galleryModalClose" aria-label="Close">&times;</button>
+    <button class="gm-arrow gm-arrow--prev" id="galleryModalPrev" aria-label="Previous photo">&#8249;</button>
+    <img class="gm-image" id="galleryModalImage" src="" alt="" />
+    <button class="gm-arrow gm-arrow--next" id="galleryModalNext" aria-label="Next photo">&#8250;</button>
+    <div class="gm-caption">
+      <span id="galleryModalYear"></span>
+      <span id="galleryModalCount"></span>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img id="footerLogo" src="" alt="CBT logo" />
+        <p id="footerAddress"></p>
+        <div class="social-row" id="footerSocial"></div>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul class="footer-links" id="footerNav"></ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul class="footer-contact" id="footerContact"></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="footerYear"></span> Centre of Excellence for Biopharmaceutical Technology, IIT Delhi.</span>
+      <span>Site redesign — content mirrored from cbt.iitd.ac.in</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/shared.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>
