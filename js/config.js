@@ -219,6 +219,12 @@ const CBT_CONFIG = {
   // download, so those two entries still point at the (dead) original URL.
   newsArchive: [
     {
+      year: "2025",
+      items: [
+        { title: "CBT Course Series Brochure 2025", image: "assets/images/news-events/cbt-brochure-2025.jpg", url: "assets/pdfs/cbt-brochure-2025.pdf" },
+      ],
+    },
+    {
       year: "2024",
       items: [
         { title: "CBT Course Series Brochure 2024", image: "assets/images/news-events/dec2024.jpg", url: "assets/pdfs/cbt-course-series-brochure-2024.pdf" },
