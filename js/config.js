@@ -181,6 +181,7 @@ const CBT_CONFIG = {
   ],
 
   gallery: [
+    { year: "Course Series 2025", dir: "dec-2025", count: 20, coverIndex: 19 },
     { year: "Course Series 2024", dir: "dec-2024", count: 17, coverIndex: 8 },
     { year: "Course Series 2023", dir: "dec-2023", count: 14, coverIndex: 5 },
     { year: "Course Series 2022", dir: "course-series-2022", count: 8 },
