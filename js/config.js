@@ -37,14 +37,9 @@ const CBT_CONFIG = {
     edition: "11th Annual CBT Course Series",
     tagline: "Venue: IIT Delhi — 8 - 10th Dec 2026",
     ctaLabel: "Register Now",
-    // TODO: point at the separate course-series site once it's live
-    // (kept off this institute-hosted page on purpose — see plan doc —
-    // so the yearly update doesn't need an institute IT change request).
-    registrationUrl: "#",
+    registrationUrl: "course-series/register.html",
     aboutLabel: "About the Event",
-    // Placeholder — pointed at the News & Events archive for now since
-    // there's no dedicated event-details page yet.
-    aboutUrl: "news-events.html",
+    aboutUrl: "course-series/about.html",
   },
 
   contactCta: {
