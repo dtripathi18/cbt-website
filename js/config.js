@@ -37,9 +37,8 @@ const CBT_CONFIG = {
     edition: "11th Annual CBT Course Series",
     tagline: "Venue: IIT Delhi — 8 - 10th Dec 2026",
     ctaLabel: "Register Now",
-    // Standalone site — see dtripathi18/cbt-course-series-2026 (split out
-    // of this repo's course-series/ folder, kept here only as a reference
-    // copy — see that folder's own comments).
+    // Standalone site — dtripathi18/cbt-course-series-2026, hosted at
+    // cbtcourseseries2026.tech. No longer lives in this repo.
     registrationUrl: "https://cbtcourseseries2026.tech/register.html",
     aboutLabel: "About the Event",
     aboutUrl: "https://cbtcourseseries2026.tech/",
