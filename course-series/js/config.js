@@ -1,8 +1,11 @@
 /**
  * Config for the CBT Course Series registration microsite.
- * Deliberately standalone — this folder shares nothing with the main
- * site's /js or /css, so it can be lifted out to its own repo/hosting
- * later with no untangling.
+ *
+ * NOTE: this folder has been split out into its own live repo/domain —
+ * dtripathi18/cbt-course-series-2026, served at cbtcourseseries2026.tech.
+ * This copy is kept here only as a historical reference (per project
+ * decision, not deleted yet) and is NOT what's actually live — edits here
+ * won't affect the real site. Make changes in the other repo instead.
  */
 const COURSE_SERIES_CONFIG = {
   site: {
