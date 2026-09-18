@@ -224,6 +224,7 @@
     submitNote.className = "cs-submit-note cs-submit-note--pending";
     submitNote.textContent = "Submitting…";
 
+    let payload;
     try {
       const screenshotFile = document.getElementById("fScreenshot").files[0];
       const screenshotBase64 = screenshotFile ? await readFileAsBase64(screenshotFile) : "";
@@ -233,7 +234,7 @@
         return picked ? { code: picked.code, title: picked.title } : { code: "", title: "" };
       });
 
-      const payload = {
+      payload = {
         name: document.getElementById("fName").value,
         email: document.getElementById("fEmail").value,
         gender: document.getElementById("fGender").value,
@@ -255,24 +256,33 @@
         screenshotFilename: screenshotFile ? screenshotFile.name : "",
         screenshotMimeType: screenshotFile ? screenshotFile.type : "",
       };
+    } catch (err) {
+      // A real, pre-send failure (e.g. the screenshot couldn't be read) —
+      // nothing was sent, so it's correct to stay here and let them retry.
+      submitNote.className = "cs-submit-note cs-submit-note--error";
+      submitNote.textContent = "Something went wrong preparing your registration. Please try again.";
+      submitBtn.disabled = false;
+      return;
+    }
 
-      // Apps Script Web Apps don't return CORS headers, so the response
-      // can't be read back — "no-cors" fires the request without letting us
-      // inspect success/failure. A resolved fetch here just means the
-      // request went out, not that the Sheet write succeeded.
+    try {
       await fetch(cfg.submitEndpointUrl, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload),
       });
-
-      window.location.href = "thank-you.html";
-    } catch (err) {
-      submitNote.className = "cs-submit-note cs-submit-note--error";
-      submitNote.textContent = "Something went wrong sending your registration. Please try again, or email us directly.";
-    } finally {
-      submitBtn.disabled = false;
+    } catch (networkErr) {
+      // Apps Script Web Apps execute doPost() — and already write the Sheet
+      // row / send the email — on the initial POST, then 302-redirect to a
+      // separate domain purely to deliver the response back to the browser.
+      // On a slow/flaky connection that second hop can fail even though the
+      // registration was already recorded, so a rejected fetch here isn't a
+      // reliable failure signal. We don't show an error for it; the
+      // thank-you page's 24–48h note is the real safety net for genuine
+      // delivery failures.
     }
+
+    window.location.href = "thank-you.html";
   });
 })();
