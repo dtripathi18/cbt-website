@@ -3,6 +3,7 @@
 (function () {
   const cfg = COURSE_SERIES_CONFIG;
   initCsNavToggle();
+  initMainSiteLinks(cfg);
 
   // ---- Intro banner (above the form) ----
   document.getElementById("introHeading").textContent = cfg.intro.heading;

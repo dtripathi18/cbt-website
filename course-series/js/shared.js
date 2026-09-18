@@ -23,6 +23,15 @@ function initCsNavToggle() {
   });
 }
 
+// Points the header/footer "CBT main site" links at cfg.site.mainSiteUrl —
+// same header/footer markup on every page in this microsite.
+function initMainSiteLinks(cfg) {
+  const navLink = document.getElementById("mainSiteNavLink");
+  const footerLink = document.getElementById("mainSiteFooterLink");
+  if (navLink) navLink.href = cfg.site.mainSiteUrl;
+  if (footerLink) footerLink.href = cfg.site.mainSiteUrl;
+}
+
 // Fee tier table markup — shared by the register page and the about page so
 // the two never drift out of sync.
 function renderFeeTableHTML(cfg) {

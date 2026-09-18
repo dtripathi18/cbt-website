@@ -8,6 +8,9 @@ const COURSE_SERIES_CONFIG = {
   site: {
     title: "CBT Course Series",
     wordmark: "CBT / 2026",
+    // Now a standalone site (cbtcourseseries2026.tech) — this is an
+    // absolute URL rather than "../index.html" for that reason.
+    mainSiteUrl: "https://dtripathi18.github.io/cbt-website/",
   },
 
   event: {

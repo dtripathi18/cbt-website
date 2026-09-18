@@ -4,6 +4,7 @@
 (function () {
   const cfg = COURSE_SERIES_CONFIG;
   initCsNavToggle();
+  initMainSiteLinks(cfg);
 
   // ---- Hero ----
   document.getElementById("aboutEyebrow").textContent = cfg.about.eyebrow;

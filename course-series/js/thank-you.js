@@ -2,6 +2,7 @@
 (function () {
   const cfg = COURSE_SERIES_CONFIG;
   initCsNavToggle();
+  initMainSiteLinks(cfg);
 
   document.getElementById("thankYouMessage").innerHTML = cfg.thankYou.message.join("<br />");
   document.getElementById("thankYouNote").innerHTML =
