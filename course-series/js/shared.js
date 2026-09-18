@@ -11,6 +11,18 @@ function formatINR(n) {
   return "₹" + n.toLocaleString("en-IN");
 }
 
+// Mobile nav hamburger toggle — same header markup on every page in this
+// microsite, so this is wired up once and called from each page's script.
+function initCsNavToggle() {
+  const toggle = document.getElementById("csNavToggle");
+  const nav = document.getElementById("csNav");
+  if (!toggle || !nav) return;
+  toggle.addEventListener("click", () => {
+    const isOpen = nav.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(isOpen));
+  });
+}
+
 // Fee tier table markup — shared by the register page and the about page so
 // the two never drift out of sync.
 function renderFeeTableHTML(cfg) {

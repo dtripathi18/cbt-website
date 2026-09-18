@@ -153,9 +153,19 @@ const COURSE_SERIES_CONFIG = {
   },
   postPaymentEmail: "coe.biopharma.course@gmail.com",
 
-  // TODO: paste the Google Apps Script Web App URL here once the target
-  // Google Sheet is set up (the user will provide the account + sheet).
-  // Until this is filled in, the form short-circuits submission with an
-  // inline "not connected yet" message instead of making a request.
-  submitEndpointUrl: "",
+  // Shown on thank-you.html after a successful submission.
+  thankYou: {
+    message: [
+      "Dear Participant,",
+      "We have received your registration for the CBT Course Series 2026.",
+      "Thanks,",
+      "CBT Team",
+    ],
+    // postPaymentEmail (above) is reused here rather than duplicated.
+    noteBeforeEmail: "If you don't get a copy of your responses (acknowledgement) mail within 24–48 hours, please drop a mail on",
+  },
+
+  // Apps Script Web App (course-series/apps-script/Code.gs), deployed and
+  // bound to the registrations Sheet + Drive folder.
+  submitEndpointUrl: "https://script.google.com/macros/s/AKfycbzauAeVA8Q9N6GnTTDQ1l03En5dPCh_xus3u-mxHwCKSRgCEtPhrmef5eonHb96q2q0/exec",
 };

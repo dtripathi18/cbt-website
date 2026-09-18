@@ -3,6 +3,7 @@
 // register.js so the two pages never drift out of sync.
 (function () {
   const cfg = COURSE_SERIES_CONFIG;
+  initCsNavToggle();
 
   // ---- Hero ----
   document.getElementById("aboutEyebrow").textContent = cfg.about.eyebrow;

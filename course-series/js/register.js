@@ -2,6 +2,7 @@
 // computes the live total, and handles submission.
 (function () {
   const cfg = COURSE_SERIES_CONFIG;
+  initCsNavToggle();
 
   // ---- Intro banner (above the form) ----
   document.getElementById("introHeading").textContent = cfg.intro.heading;
@@ -26,6 +27,12 @@
     introLink.classList.add("cs-intro-link--disabled");
     introLink.addEventListener("click", (e) => e.preventDefault());
   }
+
+  // ---- Contact number (+91 prefix is fixed, input is digits-only, max 10) ----
+  const contactInput = document.getElementById("fContact");
+  contactInput.addEventListener("input", () => {
+    contactInput.value = contactInput.value.replace(/\D/g, "").slice(0, 10);
+  });
 
   // ---- Bank details (NEFT payment) ----
   const bankRows = [
@@ -167,11 +174,25 @@
 
   recalculate();
 
+  // Reads a File as base64 (no "data:...;base64," prefix) — Apps Script Web
+  // Apps can't parse multipart file uploads, so the screenshot travels as a
+  // base64 string inside the JSON payload and gets decoded back into a file
+  // server-side.
+  function readFileAsBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(",")[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
   // ---- Submit ----
   const form = document.getElementById("regForm");
   const submitNote = document.getElementById("submitNote");
+  const submitBtn = form.querySelector(".cs-submit");
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     if (!form.checkValidity()) {
@@ -179,11 +200,15 @@
       return;
     }
 
-    const anyModuleSelected = moduleCheckboxes.some((m) => !m.isNone && m.checkbox.checked);
-    if (!anyModuleSelected) {
+    // Every day needs an explicit choice — a module or "None" — rather than
+    // silently treating an untouched day as "not attending".
+    const unselectedDays = cfg.days.filter(
+      (day, i) => !moduleCheckboxes.some((m) => m.dayIndex === i && m.checkbox.checked)
+    );
+    if (unselectedDays.length > 0) {
       submitNote.hidden = false;
       submitNote.className = "cs-submit-note cs-submit-note--error";
-      submitNote.textContent = "Select at least one module, or mark “None” for every day if you're not attending.";
+      submitNote.textContent = `Please make a selection for ${unselectedDays.map((d) => d.label).join(", ")} — pick a module, or mark "None" if you're not attending.`;
       return;
     }
 
@@ -194,8 +219,60 @@
       return;
     }
 
-    // TODO: once submitEndpointUrl is a real Apps Script Web App URL, this
-    // will actually fire. Left unimplemented (payload shape TBD) until the
-    // target Sheet's structure is known.
+    submitBtn.disabled = true;
+    submitNote.hidden = false;
+    submitNote.className = "cs-submit-note cs-submit-note--pending";
+    submitNote.textContent = "Submitting…";
+
+    try {
+      const screenshotFile = document.getElementById("fScreenshot").files[0];
+      const screenshotBase64 = screenshotFile ? await readFileAsBase64(screenshotFile) : "";
+
+      const selectedByDay = cfg.days.map((day, i) => {
+        const picked = moduleCheckboxes.find((m) => m.dayIndex === i && !m.isNone && m.checkbox.checked);
+        return picked ? { code: picked.code, title: picked.title } : { code: "", title: "" };
+      });
+
+      const payload = {
+        name: document.getElementById("fName").value,
+        email: document.getElementById("fEmail").value,
+        gender: document.getElementById("fGender").value,
+        contact: "+91" + document.getElementById("fContact").value,
+        affiliationType: affiliationTypeSelect.value,
+        organization: document.getElementById("fOrganization").value,
+        position: positionSelect.value,
+        day1Code: selectedByDay[0].code,
+        day1Title: selectedByDay[0].title,
+        day2Code: selectedByDay[1].code,
+        day2Title: selectedByDay[1].title,
+        day3Code: selectedByDay[2].code,
+        day3Title: selectedByDay[2].title,
+        accommodation: cfg.accommodation[Number(accommodationSelect.value)].label,
+        registrationFee: feeDisplay.value,
+        txnId: document.getElementById("fTxnId").value,
+        txnDate: document.getElementById("fTxnDate").value,
+        screenshotBase64,
+        screenshotFilename: screenshotFile ? screenshotFile.name : "",
+        screenshotMimeType: screenshotFile ? screenshotFile.type : "",
+      };
+
+      // Apps Script Web Apps don't return CORS headers, so the response
+      // can't be read back — "no-cors" fires the request without letting us
+      // inspect success/failure. A resolved fetch here just means the
+      // request went out, not that the Sheet write succeeded.
+      await fetch(cfg.submitEndpointUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload),
+      });
+
+      window.location.href = "thank-you.html";
+    } catch (err) {
+      submitNote.className = "cs-submit-note cs-submit-note--error";
+      submitNote.textContent = "Something went wrong sending your registration. Please try again, or email us directly.";
+    } finally {
+      submitBtn.disabled = false;
+    }
   });
 })();

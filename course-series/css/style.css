@@ -16,6 +16,9 @@
   --cs-accent-soft: #e8f0fe;
   --cs-danger: #d92d20;
   --cs-danger-soft: #fef3f2;
+  --cs-success: #15803d;
+  --cs-success-soft: #f0fdf4;
+  --cs-success-line: #bbf7d0;
   --cs-radius: 16px;
   --cs-radius-sm: 10px;
   --cs-rail: 56px;
@@ -68,6 +71,23 @@ a { color: var(--cs-accent-dark); }
 }
 .cs-nav-link:hover { color: var(--cs-accent); }
 .cs-nav-link--muted { color: var(--cs-ink-soft); }
+
+.cs-nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+.cs-nav-toggle span {
+  width: 22px;
+  height: 2px;
+  background: var(--cs-ink);
+  border-radius: 2px;
+}
 
 /* ---------- Layout ---------- */
 .cs-main { padding: 44px 0 90px; }
@@ -190,6 +210,37 @@ a { color: var(--cs-accent-dark); }
   outline: none;
   border-color: var(--cs-accent);
   box-shadow: 0 0 0 4px var(--cs-accent-soft);
+}
+
+.cs-phone-field {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--cs-line-strong);
+  border-radius: var(--cs-radius-sm);
+  background: var(--cs-paper);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  overflow: hidden;
+}
+.cs-phone-field:focus-within {
+  border-color: var(--cs-accent);
+  box-shadow: 0 0 0 4px var(--cs-accent-soft);
+}
+.cs-phone-prefix {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  background: var(--cs-panel);
+  border-right: 1px solid var(--cs-line-strong);
+  color: var(--cs-ink-soft);
+  font-weight: 600;
+  font-size: 1rem;
+}
+.cs-phone-field input {
+  flex: 1;
+  min-width: 0;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
 .cs-field input[type="file"] {
   padding: 10px 15px;
@@ -375,6 +426,44 @@ a { color: var(--cs-accent-dark); }
 }
 .cs-btn-primary:hover { background: var(--cs-accent-dark); }
 
+/* ---------- Thank-you page ---------- */
+.cs-thankyou {
+  max-width: 560px;
+  margin: 40px auto 0;
+  padding: 48px 40px;
+  text-align: center;
+  background: var(--cs-success-soft);
+  border: 1px solid var(--cs-success-line);
+  border-radius: var(--cs-radius);
+}
+.cs-thankyou-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  background: var(--cs-success);
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+.cs-thankyou-message {
+  color: var(--cs-success);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.cs-thankyou-note {
+  color: var(--cs-success);
+  font-size: 0.92rem;
+  opacity: 0.85;
+  margin-bottom: 28px;
+}
+.cs-thankyou-note a { color: var(--cs-success); font-weight: 700; }
+
 /* ---------- About page ---------- */
 .cs-about-hero { padding: 12px 0 8px; max-width: 760px; }
 .cs-about-eyebrow {
@@ -471,6 +560,21 @@ a { color: var(--cs-accent-dark); }
 @media (max-width: 640px) {
   :root { --cs-rail: 44px; --cs-node: 32px; }
   .cs-section-body { padding: 20px 18px 22px; }
-  .cs-nav { gap: 14px; }
-  .cs-nav-link { font-size: 0.88rem; }
+  .cs-nav-toggle { display: flex; }
+  .cs-nav {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 10px;
+    background: var(--cs-page);
+    border-bottom: 1px solid var(--cs-line);
+    box-shadow: 0 10px 24px rgba(23, 32, 51, 0.1);
+  }
+  .cs-nav.open { display: flex; }
+  .cs-nav-link { width: 100%; padding: 12px 10px; font-size: 0.95rem; }
 }

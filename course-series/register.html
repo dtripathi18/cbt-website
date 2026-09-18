@@ -8,16 +8,22 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16.png" />
+<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png" />
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
 <header class="cs-header">
   <div class="cs-container cs-header-inner">
-    <a class="cs-brand" href="register.html">
+    <a class="cs-brand" href="about.html">
       <img src="assets/images/cbt-logo.png" alt="CBT logo" />
     </a>
-    <nav class="cs-nav">
+    <button class="cs-nav-toggle" id="csNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="cs-nav" id="csNav">
       <a class="cs-nav-link" href="about.html">About the Event</a>
       <a class="cs-nav-link cs-nav-link--muted" href="../index.html">← CBT main site</a>
     </nav>
@@ -55,8 +61,15 @@
             </select>
           </div>
           <div class="cs-field">
+            <label for="fEmail">Email address <span class="cs-req">*</span></label>
+            <input id="fEmail" name="email" type="email" required />
+          </div>
+          <div class="cs-field">
             <label for="fContact">Contact number <span class="cs-req">*</span></label>
-            <input id="fContact" name="contact" type="tel" required />
+            <div class="cs-phone-field">
+              <span class="cs-phone-prefix">+91</span>
+              <input id="fContact" name="contact" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" title="10-digit phone number" required />
+            </div>
           </div>
           <div class="cs-field">
             <label for="fAffiliationType">Affiliation <span class="cs-req">*</span></label>
@@ -154,7 +167,7 @@
 
 <footer class="cs-footer">
   <div class="cs-container">
-    Part of the Centre of Excellence for Biopharmaceutical Technology (CBT), IIT Delhi — <a href="../index.html">main site →</a>
+    Organized by the Centre of Excellence for Biopharmaceutical Technology (CBT), IIT Delhi — <a href="../index.html">main site →</a>
   </div>
 </footer>
 
