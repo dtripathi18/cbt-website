@@ -3,14 +3,6 @@
   const cfg = CBT_CONFIG;
   const contactGrid = document.getElementById("contactGrid");
 
-  const socialIcons = [
-    { key: "youtube", label: "YT", url: cfg.contact.social.youtube },
-    { key: "linkedin", label: "in", url: cfg.contact.social.linkedin },
-  ];
-  const socialHtml = socialIcons
-    .map((s) => `<a href="${s.url}" target="_blank" rel="noopener" aria-label="${s.key}">${s.label}</a>`)
-    .join("");
-
   const generalCard = el(
     "div",
     "contact-card",
@@ -18,7 +10,7 @@
      <p class="cc-sub">${cfg.contact.address}</p>
      <div class="cc-line"><a href="tel:${cfg.contact.phone.replace(/[^+\d]/g, "")}">${cfg.contact.phone}</a></div>
      <div class="cc-line"><a href="mailto:${cfg.contact.email}">${cfg.contact.email}</a></div>
-     <div class="social-row">${socialHtml}</div>`
+     <div class="social-row">${socialIconsHTML()}</div>`
   );
   contactGrid.appendChild(generalCard);
 

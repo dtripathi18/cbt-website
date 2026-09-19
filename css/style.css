@@ -1068,6 +1068,7 @@ p { margin: 0 0 1em; }
   color: var(--navy-800);
 }
 .contact-card .social-row a:hover { background: var(--accent); color: #fff; }
+.contact-card .social-row a:hover img { filter: brightness(0) invert(1); }
 
 /* ---------- Footer ---------- */
 .site-footer {
@@ -1105,8 +1106,15 @@ p { margin: 0 0 1em; }
   background: rgba(255, 255, 255, 0.08);
   font-size: 0.85rem;
   font-weight: 700;
+  transition: background 0.15s ease;
 }
 .social-row a:hover { background: var(--accent); }
+.social-row img { width: 17px; height: 17px; display: block; }
+/* Footer sits on a dark background — icons need to be white. The contact
+   card sits on a light background, so its icons stay their natural dark
+   color (see the hover rule above, which flips them white on hover to
+   match the accent-colored badge). */
+.site-footer .social-row img { filter: brightness(0) invert(1); }
 .footer-bottom {
   display: flex;
   justify-content: space-between;

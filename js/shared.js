@@ -14,6 +14,26 @@ function researchTeaser(body) {
   return match ? match[0] : body;
 }
 
+// YouTube/LinkedIn icon links — used by both the site footer and the
+// Contact page's "General Enquiries" card, so there's one place that knows
+// the icon markup instead of two copies that can drift (the footer and
+// Contact card style the resulting <img> differently via CSS, since one
+// sits on a dark background and the other on light).
+function socialIconsHTML() {
+  const cfg = CBT_CONFIG;
+  const icons = [
+    { key: "youtube", label: "YouTube", url: cfg.contact.social.youtube },
+    { key: "linkedin", label: "LinkedIn", url: cfg.contact.social.linkedin },
+  ];
+  return icons
+    .map(
+      (s) =>
+        `<a href="${s.url}" target="_blank" rel="noopener" aria-label="${s.label}">` +
+        `<img src="assets/images/icons/${s.key}.svg" alt="" /></a>`
+    )
+    .join("");
+}
+
 // Renders cfg.news into a container (used on the homepage and the News &
 // Events page).
 function renderNewsGrid(container) {
@@ -82,19 +102,7 @@ function renderNewsGrid(container) {
     footerContact.appendChild(li);
   });
 
-  const footerSocial = document.getElementById("footerSocial");
-  const socialLinks = [
-    { key: "youtube", label: "YT", url: cfg.contact.social.youtube },
-    { key: "linkedin", label: "in", url: cfg.contact.social.linkedin },
-  ];
-  socialLinks.forEach((s) => {
-    const a = el("a", null, s.label);
-    a.href = s.url;
-    a.target = "_blank";
-    a.rel = "noopener";
-    a.setAttribute("aria-label", s.key);
-    footerSocial.appendChild(a);
-  });
+  document.getElementById("footerSocial").innerHTML = socialIconsHTML();
 
   document.getElementById("footerYear").textContent = new Date().getFullYear();
 })();
