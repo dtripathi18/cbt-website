@@ -1109,7 +1109,10 @@ p { margin: 0 0 1em; }
   transition: background 0.15s ease;
 }
 .social-row a:hover { background: var(--accent); }
-.social-row img { width: 17px; height: 17px; display: block; }
+/* margin/height reset: the footer's `.footer-brand img` logo rule also
+   matches these icons (they live inside .footer-brand) and would otherwise
+   add its bottom margin, pushing the icon off-center in its circle. */
+.social-row img { width: 17px; height: 17px; margin: 0; flex: 0 0 auto; display: block; }
 /* Footer sits on a dark background — icons need to be white. The contact
    card sits on a light background, so its icons stay their natural dark
    color (see the hover rule above, which flips them white on hover to
