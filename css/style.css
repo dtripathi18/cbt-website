@@ -410,10 +410,6 @@ p { margin: 0 0 1em; }
   overflow: hidden;
   transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
-.research-card:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-4px);
-}
 .research-card .rc-image {
   position: relative;
   aspect-ratio: 16 / 10;

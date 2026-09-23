@@ -162,6 +162,13 @@
 
   // ---- Live calculation ----
   const feeDisplay = document.getElementById("feeDisplay");
+  const earlyBirdNote = document.getElementById("earlyBirdNote");
+
+  // Checked on every recalculation (not once at load) so a page left open
+  // past the cutoff stops applying the discount.
+  function earlyBirdActive() {
+    return Date.now() < new Date(cfg.earlyBird.endsAt).getTime();
+  }
 
   function recalculate() {
     const selectedCount = moduleCheckboxes.filter((m) => !m.isNone && m.checkbox.checked).length;
@@ -169,8 +176,15 @@
     const category = affiliationTypeSelect.value; // "academia" | "industry" | "" (not selected yet)
 
     const moduleFee = selectedCount > 0 && category ? (cfg.feeTiers[category][selectedCount] || 0) : 0;
-    const total = moduleFee + accommodationTier.price;
+    const earlyBird = earlyBirdActive();
+    const discountedModuleFee = earlyBird
+      ? Math.round(moduleFee * (1 - cfg.earlyBird.discountPercent / 100))
+      : moduleFee;
+    const total = discountedModuleFee + accommodationTier.price;
     feeDisplay.value = formatINR(total);
+
+    earlyBirdNote.hidden = !earlyBird;
+    earlyBirdNote.textContent = cfg.earlyBird.note;
   }
 
   recalculate();
@@ -197,6 +211,7 @@
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    recalculate(); // re-check the early bird cutoff in case the page sat open past it
 
     if (!form.checkValidity()) {
       form.reportValidity();

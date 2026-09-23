@@ -365,6 +365,7 @@ a { color: var(--cs-accent-dark); }
 .cs-schedule-code { display: inline; font-weight: 700; color: var(--cs-accent); }
 .cs-table-note { margin: 14px 0 0; color: var(--cs-ink-soft); font-size: 0.89rem; }
 .cs-fee-warning { margin: 8px 0 0; color: var(--cs-danger); font-weight: 700; font-size: 0.92rem; }
+.cs-fee-subnote { margin: 0; color: var(--cs-ink-soft); font-size: 0.82rem; }
 
 /* ---------- Bank details ---------- */
 .cs-bank-box {

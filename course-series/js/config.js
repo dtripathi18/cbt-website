@@ -35,7 +35,7 @@ const COURSE_SERIES_CONFIG = {
       },
     ],
     highlights: [
-      "3 days of sessions across 16 modules — attend as many or as few as suit you",
+      "3 days of sessions across 15 modules — attend as many or as few as suit you",
       "One module per day is selected at registration; each day runs modules in parallel across rooms",
       "Separate fee tiers for academia and industry, based on how many modules you pick",
     ],
@@ -47,8 +47,9 @@ const COURSE_SERIES_CONFIG = {
   intro: {
     heading: "Course Registration",
     body: 'Center of Excellence for Biopharmaceutical Technology (COE-CBT) is organizing our annual training event "CBT Course Series 2026" from 8th – 10th Dec 2026. Attendees from industry and academia are welcome to participate.',
-    // TODO: user will provide the real banner photo — drop it in at this path.
-    bannerImage: "assets/images/course-banner.png",
+    // Bump the ?v= value whenever course-banner.png is replaced, so browsers
+    // and the host's cache fetch the new image instead of the old one.
+    bannerImage: "assets/images/course-banner.png?v=2026-09-23",
     brochureLabel: "More Details & Brochure",
     // TODO: placeholder — user will provide the real link later.
     brochureUrl: "",
@@ -56,67 +57,76 @@ const COURSE_SERIES_CONFIG = {
 
   // Each module appears in exactly one day. Modules have no individual price
   // — the real fee structure (below, `feeTiers`) prices by how many modules
-  // are picked in total, not which ones.
+  // are picked in total, not which ones. Titles and day assignments come from
+  // the module-name table (A10:C16, one column per day) on the "Grid" sheet
+  // of reference/cbt_event.xlsx.
   days: [
     {
       label: "Day 1",
       date: "December 8, 2026",
       modules: [
-        { code: "M1", title: "Commercial Biopharma Manufacturing — Best Practices for Process and Facility Operation (Day 1)" },
-        { code: "M3", title: "Drug Development: Concepts and Frameworks" },
-        { code: "M6", title: "Design of Experiments for Bioprocess Experimentation" },
-        { code: "M9", title: "New Age Biotherapeutics: CAR T cells, ADCs, and VLPs" },
-        { code: "M14", title: "Analogue: a Path to Computational Drug Design" },
+        { code: "M1", title: "Fundamentals of Upstream Process Development" },
+        { code: "M4", title: "Analytical Characterization of Biosimilars" },
+        { code: "M7", title: "Design of Experiments for Bioprocess Experimentation" },
+        { code: "M10", title: "Drug Development: Concepts and Frameworks" },
+        { code: "M13", title: "Critical Quality Attribute in Biotherapeutics" },
+        { code: "M15", title: "AI & Machine Learning in Bioprocess: From Principles to Practice" },
       ],
     },
     {
       label: "Day 2",
       date: "December 9, 2026",
       modules: [
-        { code: "M2", title: "Commercial Biopharma Manufacturing — Best Practices for Process and Facility Operation (Day 2)" },
-        { code: "M4", title: "Regulatory Framework for Lifecycle Management of Biotherapeutic Products" },
-        { code: "M7", title: "Development and Optimization of Upstream processes" },
-        { code: "M10", title: "Critical Quality Attributes of Biotherapeutic Products" },
-        { code: "M12", title: "Downstream Processing Development for Biotherapeutic Purification" },
-        { code: "M15", title: "Machine Learning Fundamentals for Bioprocess Engineers" },
+        { code: "M2", title: "Downstream Processing for Biopharmaceutical Production" },
+        { code: "M5", title: "Formulation Science for Biotherapeutics: From QTPP to Stable Drug Products (Part I)" },
+        { code: "M8", title: "Commercial Biopharma Manufacturing — Mastering Process and Facility Operations (Part I)" },
+        { code: "M11", title: "Regulatory Framework for Lifecycle Management of Products" },
+        { code: "M14", title: "Smart Bioprocessing: From Data to Decisions" },
       ],
     },
     {
       label: "Day 3",
       date: "December 10, 2026",
       modules: [
-        { code: "M5", title: "Immunogenicity and other Safety Concerns related to Biotherapeutic Products" },
-        { code: "M8", title: "Scale-up and commercial operations in upstream processes" },
-        { code: "M11", title: "Role of Spectroscopy in Characterization of Biotherapeutic Products" },
-        { code: "M13", title: "Continuous Bioprocessing: Design, Integration, Monitoring and Control" },
-        { code: "M16", title: "Biopharma 4.0: Path Towards Next Generation Biomanufacturing" },
+        { code: "M3", title: "Next Generation Bioprocessing" },
+        { code: "M6", title: "Formulation Science for Biotherapeutics: From QTPP to Patient-Centric Delivery (Part II)" },
+        { code: "M9", title: "Commercial Biopharma Manufacturing — Tech Ops & Advanced Systems (Part II)" },
+        { code: "M12", title: "Biosimilar Guidelines" },
       ],
     },
   ],
 
-  // Real numbers, read directly off the live form's "FEE STRUCTURE" table
-  // image. Already inclusive of 18% GST. Priced per how many modules (1-3)
-  // are picked in total across all 3 days, by category.
+  // From the fee table on the "Grid" sheet of reference/cbt_event.xlsx.
+  // Already inclusive of 18% GST. Priced per how many modules (1-3) are
+  // picked in total across all 3 days, by category.
   feeTiers: {
-    academia: { 1: 2500, 2: 3500, 3: 6000 },
-    industry: { 1: 6000, 2: 9500, 3: 12000 },
+    academia: { 1: 3000, 2: 5000, 3: 6500 },
+    industry: { 1: 5000, 2: 9000, 3: 12000 },
   },
   feeNote: "Fees above are inclusive of 18% GST.",
   feeWarning: "*Fee once paid is non-refundable.",
 
-  // Room/venue schedule, read off the live form's "Module Details" table
-  // image. Room assignments are carried over from last year's edition as
-  // reference — confirm they still hold before this goes live. Module codes
-  // reference the same modules defined in `days` above (titles aren't
+  // Early bird: % off the module fee (accommodation is added undiscounted on
+  // top). Applies through the end of 16 Nov IST, so it switches off at
+  // midnight IST going into 17 Nov.
+  earlyBird: {
+    discountPercent: 10,
+    endsAt: "2026-11-17T00:00:00+05:30",
+    note: "*Includes a 10% early bird discount on module fees (not on accommodation), valid till 16 November 2026 (IST).",
+  },
+
+  // Room/venue schedule (one row per room, one cell per day), from the venue
+  // table (A1:D8) on the "Grid" sheet of reference/cbt_event.xlsx. Module
+  // codes reference the same modules defined in `days` above (titles aren't
   // duplicated here).
   roomScheduleTime: "8:30am – 6:30pm",
   roomSchedule: [
-    { room: "LHC 413.1", cells: ["M1", "M2", null] },
-    { room: "LHC 413.2", cells: ["M3", "M4", "M5"] },
-    { room: "LHC 416", cells: ["M6", "M7", "M8"] },
-    { room: "LHC 413.3", cells: ["M9", "M10", "M11"] },
-    { room: "LHC 418", cells: [null, "M12", "M13"] },
-    { room: "LHC 413.4", cells: ["M14", "M15", "M16"] },
+    { room: "LHC 408", cells: ["M1", "M2", "M3"] },
+    { room: "LHC 410", cells: ["M4", "M5", "M6"] },
+    { room: "LHC 416", cells: ["M7", "M8", "M9"] },
+    { room: "LHC 418", cells: ["M10", "M11", "M12"] },
+    { room: "LHC 421", cells: ["M13", "M14", null] },
+    { room: "LHC 422", cells: ["M15", null, null] },
   ],
 
   // Matches the live form's real rates (these ARE real — the form itself
