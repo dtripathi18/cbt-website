@@ -289,9 +289,9 @@ a { color: var(--cs-accent-dark); }
   gap: 9px;
   margin: 2px 0 0;
   padding: 10px 14px;
-  border: 1px solid #c9dcfb;
+  border: 1px solid #c3e4dd;
   border-radius: var(--cs-radius-sm);
-  background: linear-gradient(120deg, #e0f2fe 0%, #e8f0fe 55%, #ede9fe 100%);
+  background: linear-gradient(120deg, #dcfce7 0%, #e0f2fe 55%, #dbeafe 100%);
   color: var(--cs-accent-dark);
   font-size: 0.86rem;
   font-weight: 500;
