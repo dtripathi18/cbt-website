@@ -259,12 +259,50 @@ a { color: var(--cs-accent-dark); }
   color: var(--cs-accent-dark);
   cursor: pointer;
 }
-.cs-field input[readonly] {
+/* Registration fee readout — a div rather than a readonly input so the
+   pre-discount amount can be struck through beside the final one. */
+.cs-fee-display {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 13px 15px;
+  border-radius: var(--cs-radius-sm);
   background: var(--cs-accent-soft);
-  border-color: var(--cs-accent-soft);
+}
+.cs-fee-original {
+  color: var(--cs-ink-soft);
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--cs-danger);
+}
+.cs-fee-final {
   font-weight: 700;
   font-size: 1.15rem;
   color: var(--cs-accent-dark);
+}
+
+.cs-early-bird {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 2px 0 0;
+  padding: 10px 14px;
+  border: 1px solid #c9dcfb;
+  border-radius: var(--cs-radius-sm);
+  background: linear-gradient(120deg, #e0f2fe 0%, #e8f0fe 55%, #ede9fe 100%);
+  color: var(--cs-accent-dark);
+  font-size: 0.86rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+.cs-early-bird::before {
+  content: "\2726"; /* ✦ */
+  flex-shrink: 0;
+  color: var(--cs-accent);
+  font-size: 0.95rem;
+  line-height: 1.35;
 }
 
 /* ---------- Modules ---------- */
@@ -365,7 +403,6 @@ a { color: var(--cs-accent-dark); }
 .cs-schedule-code { display: inline; font-weight: 700; color: var(--cs-accent); }
 .cs-table-note { margin: 14px 0 0; color: var(--cs-ink-soft); font-size: 0.89rem; }
 .cs-fee-warning { margin: 8px 0 0; color: var(--cs-danger); font-weight: 700; font-size: 0.92rem; }
-.cs-fee-subnote { margin: 0; color: var(--cs-ink-soft); font-size: 0.82rem; }
 
 /* ---------- Bank details ---------- */
 .cs-bank-box {

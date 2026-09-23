@@ -161,7 +161,9 @@
   accommodationSelect.addEventListener("change", recalculate);
 
   // ---- Live calculation ----
-  const feeDisplay = document.getElementById("feeDisplay");
+  const feeOriginal = document.getElementById("feeOriginal");
+  const feeFinal = document.getElementById("feeFinal");
+  let registrationFee = formatINR(0);
   const earlyBirdNote = document.getElementById("earlyBirdNote");
 
   // Checked on every recalculation (not once at load) so a page left open
@@ -181,7 +183,13 @@
       ? Math.round(moduleFee * (1 - cfg.earlyBird.discountPercent / 100))
       : moduleFee;
     const total = discountedModuleFee + accommodationTier.price;
-    feeDisplay.value = formatINR(total);
+    registrationFee = formatINR(total);
+    feeFinal.textContent = registrationFee;
+
+    // Strike through the pre-discount total beside the final one — only
+    // when there's actually something discounted (not ₹0 → ₹0).
+    feeOriginal.hidden = discountedModuleFee === moduleFee;
+    feeOriginal.textContent = formatINR(moduleFee + accommodationTier.price);
 
     earlyBirdNote.hidden = !earlyBird;
     earlyBirdNote.textContent = cfg.earlyBird.note;
@@ -276,7 +284,7 @@
         day3Code: selectedByDay[2].code,
         day3Title: selectedByDay[2].title,
         accommodation: cfg.accommodation[Number(accommodationSelect.value)].label,
-        registrationFee: feeDisplay.value,
+        registrationFee,
         txnId: document.getElementById("fTxnId").value,
         txnDate: document.getElementById("fTxnDate").value,
         screenshotBase64,

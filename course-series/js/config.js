@@ -112,7 +112,7 @@ const COURSE_SERIES_CONFIG = {
   earlyBird: {
     discountPercent: 10,
     endsAt: "2026-11-17T00:00:00+05:30",
-    note: "*Includes a 10% early bird discount on module fees (not on accommodation), valid till 16 November 2026 (IST).",
+    note: "Includes a 10% early bird discount on module fees, valid till 16 November 2026 (IST).",
   },
 
   // Room/venue schedule (one row per room, one cell per day), from the venue

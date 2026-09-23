@@ -140,9 +140,12 @@
         <div class="cs-bank-box" id="bankBox"></div>
         <div class="cs-stack">
           <div class="cs-field">
-            <label for="feeDisplay">Registration fee</label>
-            <input id="feeDisplay" type="text" readonly value="₹0" />
-            <p class="cs-fee-subnote" id="earlyBirdNote" hidden></p>
+            <label id="feeLabel">Registration fee</label>
+            <div class="cs-fee-display" id="feeDisplay" aria-labelledby="feeLabel" aria-live="polite">
+              <s class="cs-fee-original" id="feeOriginal" hidden></s>
+              <span class="cs-fee-final" id="feeFinal">₹0</span>
+            </div>
+            <p class="cs-early-bird" id="earlyBirdNote" hidden></p>
           </div>
           <div class="cs-field">
             <label for="fTxnId">Transaction ID <span class="cs-req">*</span></label>
