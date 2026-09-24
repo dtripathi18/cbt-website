@@ -646,7 +646,7 @@ a { color: var(--cs-accent-dark); }
 .cs-cday {
   background: var(--cs-panel);
   border-radius: var(--cs-radius);
-  padding: 18px 18px 20px;
+  padding: 18px 18px 8px; /* cards carry 12px bottom spacing */
 }
 .cs-cday + .cs-cday { margin-top: 18px; }
 .cs-cday-heading {
@@ -660,39 +660,48 @@ a { color: var(--cs-accent-dark); }
 .cs-cday-label { color: var(--cs-ink); }
 .cs-cday-date { color: var(--cs-ink-soft); font-size: 0.92rem; font-weight: 500; }
 
+/* Each accordion spans two shared rows of the day grid (header, then
+   speaker list) via subgrid, so every header in a row is exactly as tall as
+   the tallest one. The visible box is drawn on the header and body rather
+   than the card, so a closed card doesn't stretch when its neighbour opens. */
 .cs-acc-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  align-items: start;
-  gap: 12px;
+  column-gap: 12px;
+  row-gap: 0;
 }
 .cs-acc {
-  background: var(--cs-paper);
-  border: 1px solid var(--cs-line);
-  border-radius: var(--cs-radius-sm);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-.cs-acc.open {
-  border-color: var(--cs-line-strong);
-  box-shadow: 0 6px 18px rgba(23, 32, 51, 0.06);
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  padding-bottom: 12px;
 }
 .cs-acc-head {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 12px;
   width: 100%;
   padding: 14px 14px 14px 15px;
-  border: none;
-  background: none;
+  border: 1px solid var(--cs-line);
+  background: var(--cs-paper);
   font-family: var(--cs-font);
   text-align: left;
   color: var(--cs-ink);
   cursor: pointer;
   border-radius: var(--cs-radius-sm);
+  transition: border-color 0.15s ease;
+}
+.cs-acc-head:hover { border-color: var(--cs-line-strong); }
+.cs-acc.open .cs-acc-head {
+  border-color: var(--cs-line-strong);
+  border-bottom-color: transparent;
+  border-radius: var(--cs-radius-sm) var(--cs-radius-sm) 0 0;
 }
 .cs-acc-head:focus-visible { outline: 2px solid var(--cs-accent); outline-offset: -2px; }
 .cs-acc-code {
   flex: 0 0 auto;
+  align-self: flex-start;
   min-width: 40px;
   padding: 3px 8px;
   border-radius: 999px;
@@ -704,7 +713,8 @@ a { color: var(--cs-accent-dark); }
   text-align: center;
   line-height: 1.5;
 }
-.cs-acc-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+/* Title at the top, venue pinned to the bottom so venues line up across a row. */
+.cs-acc-text { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 5px; }
 .cs-acc-title { font-size: 0.96rem; font-weight: 500; line-height: 1.4; }
 .cs-acc-venue {
   display: inline-flex;
@@ -715,6 +725,7 @@ a { color: var(--cs-accent-dark); }
 }
 .cs-acc-arrow {
   flex: 0 0 auto;
+  align-self: flex-start;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -731,7 +742,12 @@ a { color: var(--cs-accent-dark); }
 /* Collapsed via a 0fr grid row so the panel can animate to its natural height. */
 .cs-acc-body {
   display: grid;
+  align-self: start;
   grid-template-rows: 0fr;
+  background: var(--cs-paper);
+  border: 1px solid var(--cs-line-strong);
+  border-top: none;
+  border-radius: 0 0 var(--cs-radius-sm) var(--cs-radius-sm);
   visibility: hidden;
   transition: grid-template-rows 0.22s ease, visibility 0s linear 0.22s;
 }
@@ -825,20 +841,31 @@ a { color: var(--cs-accent-dark); }
 .cs-speaker-modules {
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 6px;
-  margin: 10px 0 0;
+  margin: 12px 0 0;
   padding: 0;
 }
 .cs-speaker-modules li {
-  padding: 1px 9px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.86rem;
+  line-height: 1.4;
+}
+.cs-speaker-module-code {
+  flex: 0 0 auto;
+  min-width: 38px;
+  padding: 1px 7px;
   border-radius: 999px;
   background: var(--cs-paper);
   border: 1px solid var(--cs-line);
   color: var(--cs-accent-dark);
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 700;
+  text-align: center;
 }
+.cs-speaker-module-title { color: var(--cs-ink); }
 .cs-speaker-desc {
   margin: 10px 0 0;
   font-size: 0.9rem;
@@ -913,7 +940,7 @@ a { color: var(--cs-accent-dark); }
   .cs-nav-link { width: 100%; padding: 12px 10px; font-size: 0.95rem; }
   .cs-tab { padding: 13px 12px; font-size: 0.92rem; }
   .cs-tab[aria-selected="true"]::after { left: 8px; right: 8px; }
-  .cs-cday { padding: 14px 12px 14px; }
+  .cs-cday { padding: 14px 12px 2px; }
   .cs-acc-grid { grid-template-columns: 1fr; }
   .cs-tab-card { padding: 16px 14px 18px; }
   .cs-sponsors { grid-template-columns: repeat(2, 1fr); gap: 10px; }

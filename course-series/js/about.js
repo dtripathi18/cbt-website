@@ -49,13 +49,13 @@
   const allModules = cfg.days.flatMap((day) => day.modules);
   const speakerById = {};
   cfg.speakers.forEach((s) => { speakerById[s.id] = s; });
-  const moduleCodesBySpeaker = {};
+  const modulesBySpeaker = {};
   allModules.forEach((mod) => (mod.speakers || []).forEach((id) => {
     if (!speakerById[id]) {
       console.warn(`Module ${mod.code} lists unknown speaker id "${id}"`);
       return;
     }
-    (moduleCodesBySpeaker[id] = moduleCodesBySpeaker[id] || []).push(mod.code);
+    (modulesBySpeaker[id] = modulesBySpeaker[id] || []).push(mod);
   }));
 
   const chevronSVG =
@@ -126,25 +126,19 @@
   }
 
   // ---- Speakers, styled after the brochure's speaker list: bold uppercase
-  // "FIRSTNAME LASTNAME", sorted by surname. Photo and bio render only once
-  // they're filled in. ----
-  function splitName(name) {
-    const parts = name.trim().split(/\s+/);
-    const surname = parts.pop();
-    return { surname, given: parts.join(" ") };
-  }
-
+  // "FIRSTNAME LASTNAME", in alphabetical order of the name as shown. Photo
+  // and bio render only once they're filled in. ----
   document.getElementById("speakersHint").textContent =
     `${cfg.speakers.length} speakers from industry, academia and regulatory bodies.`;
 
   const speakerList = document.getElementById("speakerList");
   cfg.speakers
-    .map((s) => ({ ...s, ...splitName(s.name) }))
-    .sort((a, b) => a.surname.localeCompare(b.surname) || a.given.localeCompare(b.given))
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }))
     .forEach((s) => {
-      const codes = (moduleCodesBySpeaker[s.id] || [])
+      const mods = (modulesBySpeaker[s.id] || [])
         .slice()
-        .sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
+        .sort((a, b) => Number(a.code.slice(1)) - Number(b.code.slice(1)));
       const card = el("article", "cs-speaker");
       card.id = `speaker-${s.id}`;
       card.innerHTML = `
@@ -152,8 +146,10 @@
         <div class="cs-speaker-body">
           <h3 class="cs-speaker-name">${s.name}</h3>
           <p class="cs-speaker-affil">${s.affiliation}</p>
-          ${codes.length
-            ? `<ul class="cs-speaker-modules" aria-label="Modules">${codes.map((c) => `<li>${c}</li>`).join("")}</ul>`
+          ${mods.length
+            ? `<ul class="cs-speaker-modules" aria-label="Modules">${mods.map((m) =>
+                `<li><span class="cs-speaker-module-code">${m.code}</span><span class="cs-speaker-module-title">${m.title}</span></li>`
+              ).join("")}</ul>`
             : ""}
           ${s.description ? `<p class="cs-speaker-desc">${s.description}</p>` : ""}
         </div>`;
