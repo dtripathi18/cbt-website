@@ -1,0 +1,16 @@
+{
+  "name": "cbt-programme-admin",
+  "private": true,
+  "type": "module",
+  "description": "Local admin tool for updating the CBT Course Series speaker/module data.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.128.0",
+    "express": "^5.2.1",
+    "mupdf": "^1.28.1",
+    "ssh2-sftp-client": "^12.1.1",
+    "zod": "^4.6.5"
+  }
+}

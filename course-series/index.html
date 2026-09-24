@@ -11,7 +11,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16.png" />
 <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png" />
-<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/style.css?v=2026-09-24" />
 </head>
 <body>
 
@@ -52,17 +52,38 @@
       <div class="cs-about-audience" id="audienceGrid"></div>
     </section>
 
-    <section cla      <p class="cs-hint">15 modules across 3 days — pick the ones most relevant to you when you register.</p>
-ck the ones most relevant to you when you register.</p>
-      <div id="curriculumDays"></div>
-    </section>
-
-    <section class="cs-about-block">
-      <h2>Fees at a Glance</h2>
-      <div class="cs-fee-table-wrap">
-        <table class="cs-fee-table" id="aboutFeeTable"></table>
+    <section class="cs-about-block cs-tabs-block">
+      <div class="cs-tabs" role="tablist" aria-label="Course details" id="aboutTabs">
+        <button class="cs-tab" type="button" role="tab" id="tab-curriculum" data-tab="curriculum" aria-controls="panel-curriculum" aria-selected="true">Course Curriculum</button>
+        <button class="cs-tab" type="button" role="tab" id="tab-fees" data-tab="fees" aria-controls="panel-fees" aria-selected="false" tabindex="-1">Fee Structure</button>
+        <button class="cs-tab" type="button" role="tab" id="tab-speakers" data-tab="speakers" aria-controls="panel-speakers" aria-selected="false" tabindex="-1">Speakers</button>
+        <button class="cs-tab" type="button" role="tab" id="tab-sponsors" data-tab="sponsors" aria-controls="panel-sponsors" aria-selected="false" tabindex="-1">Sponsors</button>
       </div>
-      <p class="cs-table-note" id="aboutFeeNote"></p>
+
+      <div class="cs-tab-panel" role="tabpanel" id="panel-curriculum" aria-labelledby="tab-curriculum">
+        <p class="cs-hint" id="curriculumHint"></p>
+        <div id="curriculumDays"></div>
+      </div>
+
+      <div class="cs-tab-panel" role="tabpanel" id="panel-fees" aria-labelledby="tab-fees" hidden>
+        <div class="cs-tab-card">
+          <div class="cs-fee-table-wrap">
+            <table class="cs-fee-table" id="aboutFeeTable"></table>
+          </div>
+          <p class="cs-table-note" id="aboutFeeNote"></p>
+          <p class="cs-early-bird" id="aboutEarlyBird" hidden></p>
+          <p class="cs-fee-warning" id="aboutFeeWarning"></p>
+        </div>
+      </div>
+
+      <div class="cs-tab-panel" role="tabpanel" id="panel-speakers" aria-labelledby="tab-speakers" hidden>
+        <p class="cs-hint" id="speakersHint"></p>
+        <div class="cs-speakers" id="speakerList"></div>
+      </div>
+
+      <div class="cs-tab-panel" role="tabpanel" id="panel-sponsors" aria-labelledby="tab-sponsors" hidden>
+        <div class="cs-sponsors" id="sponsorGrid"></div>
+      </div>
     </section>
 
     <section class="cs-about-cta-band">
@@ -74,9 +95,9 @@ ck the ones most relevant to you when you register.</p>
   </div>
 </main>
 
-<script src="js/config.js?v=2026-09-23"></script>
+<script src="js/programme-data.js?v=2026-09-24"></script>
+<script src="js/config.js?v=2026-09-25"></script>
 <script src="js/shared.js?v=2026-09-23"></script>
-<script src="js/about.js?v=2026-09-23"></script>
->
+<script src="js/about.js?v=2026-09-25"></script>
 </body>
 </html>

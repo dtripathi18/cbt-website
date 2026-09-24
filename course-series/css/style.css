@@ -586,13 +586,289 @@ a { color: var(--cs-accent-dark); }
 .cs-about-audience-card h3 { font-size: 1.05rem; margin-bottom: 0.4em; }
 .cs-about-audience-card p { color: var(--cs-ink-soft); font-size: 0.95rem; margin: 0; }
 
-.cs-day--static { margin-top: 16px; }
-.cs-day--static:first-of-type { margin-top: 2px; }
-.cs-module--static,
-.cs-module--static:hover {
-  cursor: default;
-  border-color: var(--cs-line);
+/* ---------- About page: local tab navbar ---------- */
+.cs-tabs {
+  position: sticky;
+  top: 73px; /* just under the 72px sticky header + its 1px border */
+  z-index: 5;
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  background: var(--cs-page);
+  border-bottom: 1px solid var(--cs-line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.cs-tabs::-webkit-scrollbar { display: none; }
+.cs-tab {
+  flex: 0 0 auto;
+  position: relative;
+  padding: 14px 16px;
+  border: none;
+  background: none;
+  font-family: var(--cs-font);
+  font-size: 0.97rem;
+  font-weight: 500;
+  color: var(--cs-ink-soft);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.cs-tab:hover { color: var(--cs-ink); }
+.cs-tab[aria-selected="true"] { color: var(--cs-accent); font-weight: 700; }
+.cs-tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: -1px;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--cs-accent);
+}
+.cs-tab:focus-visible {
+  outline: 2px solid var(--cs-accent);
+  outline-offset: -4px;
+  border-radius: var(--cs-radius-sm);
+}
+/* clears the sticky header + tab bar when a panel is scrolled into view */
+.cs-tab-panel { scroll-margin-top: 150px; }
+.cs-tab-card {
+  background: var(--cs-panel);
+  border-radius: var(--cs-radius);
+  padding: 22px 24px 24px;
+}
+#aboutFeeTable th:not(:first-child),
+#aboutFeeTable td:not(:first-child) { text-align: center; }
+.cs-tab-card .cs-early-bird { margin-top: 12px; }
+
+/* ---------- About page: curriculum accordions ---------- */
+.cs-cday {
+  background: var(--cs-panel);
+  border-radius: var(--cs-radius);
+  padding: 18px 18px 20px;
+}
+.cs-cday + .cs-cday { margin-top: 18px; }
+.cs-cday-heading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 0 4px 14px;
+  font-size: 1.05rem;
+}
+.cs-cday-label { color: var(--cs-ink); }
+.cs-cday-date { color: var(--cs-ink-soft); font-size: 0.92rem; font-weight: 500; }
+
+.cs-acc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  align-items: start;
+  gap: 12px;
+}
+.cs-acc {
   background: var(--cs-paper);
+  border: 1px solid var(--cs-line);
+  border-radius: var(--cs-radius-sm);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.cs-acc.open {
+  border-color: var(--cs-line-strong);
+  box-shadow: 0 6px 18px rgba(23, 32, 51, 0.06);
+}
+.cs-acc-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 14px 14px 15px;
+  border: none;
+  background: none;
+  font-family: var(--cs-font);
+  text-align: left;
+  color: var(--cs-ink);
+  cursor: pointer;
+  border-radius: var(--cs-radius-sm);
+}
+.cs-acc-head:focus-visible { outline: 2px solid var(--cs-accent); outline-offset: -2px; }
+.cs-acc-code {
+  flex: 0 0 auto;
+  min-width: 40px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--cs-accent-soft);
+  color: var(--cs-accent-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-align: center;
+  line-height: 1.5;
+}
+.cs-acc-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.cs-acc-title { font-size: 0.96rem; font-weight: 500; line-height: 1.4; }
+.cs-acc-venue {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--cs-ink-soft);
+  font-size: 0.84rem;
+}
+.cs-acc-arrow {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-top: -2px;
+  border-radius: 50%;
+  color: var(--cs-ink-soft);
+  transition: transform 0.2s ease, background 0.15s ease, color 0.15s ease;
+}
+.cs-acc-head:hover .cs-acc-arrow { background: var(--cs-panel); color: var(--cs-accent); }
+.cs-acc.open .cs-acc-arrow { transform: rotate(180deg); color: var(--cs-accent); }
+
+/* Collapsed via a 0fr grid row so the panel can animate to its natural height. */
+.cs-acc-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows 0.22s ease, visibility 0s linear 0.22s;
+}
+.cs-acc.open .cs-acc-body {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows 0.22s ease, visibility 0s;
+}
+.cs-acc-inner { overflow: hidden; min-height: 0; }
+.cs-acc-label {
+  margin: 0 15px 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--cs-line);
+  color: var(--cs-ink-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.cs-acc-speakers {
+  list-style: none;
+  margin: 0 15px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cs-acc-speakers li { display: flex; flex-direction: column; line-height: 1.35; }
+.cs-acc-speaker-name { font-size: 0.93rem; font-weight: 700; }
+.cs-acc-speaker-affil { font-size: 0.84rem; color: var(--cs-ink-soft); }
+.cs-acc-empty { margin: 0 15px; color: var(--cs-ink-soft); font-size: 0.9rem; }
+.cs-acc-all {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin: 12px 15px 14px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--cs-accent);
+}
+.cs-acc-all-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--cs-accent-soft);
+  font-size: 0.85rem;
+  transition: transform 0.15s ease;
+}
+.cs-acc-all:hover .cs-acc-all-arrow { transform: translateX(3px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-acc-body, .cs-acc.open .cs-acc-body, .cs-acc-arrow { transition: none; }
+}
+
+/* ---------- About page: speakers (after the brochure's speaker list) ---------- */
+.cs-speakers {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+  gap: 12px;
+}
+.cs-speaker {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 18px;
+  background: var(--cs-panel);
+  border-radius: var(--cs-radius-sm);
+}
+.cs-speaker-photo {
+  flex: 0 0 auto;
+  width: 84px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--cs-paper);
+}
+.cs-speaker-body { flex: 1; min-width: 0; }
+.cs-speaker-name {
+  margin: 0 0 2px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.cs-speaker-affil { margin: 0; color: var(--cs-ink-soft); font-size: 0.9rem; }
+.cs-speaker-modules {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding: 0;
+}
+.cs-speaker-modules li {
+  padding: 1px 9px;
+  border-radius: 999px;
+  background: var(--cs-paper);
+  border: 1px solid var(--cs-line);
+  color: var(--cs-accent-dark);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+.cs-speaker-desc {
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  text-align: justify;
+}
+
+/* ---------- About page: sponsors ---------- */
+.cs-sponsors {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 14px;
+}
+.cs-sponsor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 112px;
+  padding: 18px 22px;
+  background: var(--cs-paper);
+  border: 1px solid var(--cs-line);
+  border-radius: var(--cs-radius-sm);
+  font-weight: 700;
+  color: var(--cs-ink-soft);
+  text-align: center;
+}
+.cs-sponsor img {
+  max-width: 100%;
+  max-height: 64px;
+  object-fit: contain;
 }
 
 .cs-about-cta-band {
@@ -635,4 +911,12 @@ a { color: var(--cs-accent-dark); }
   }
   .cs-nav.open { display: flex; }
   .cs-nav-link { width: 100%; padding: 12px 10px; font-size: 0.95rem; }
+  .cs-tab { padding: 13px 12px; font-size: 0.92rem; }
+  .cs-tab[aria-selected="true"]::after { left: 8px; right: 8px; }
+  .cs-cday { padding: 14px 12px 14px; }
+  .cs-acc-grid { grid-template-columns: 1fr; }
+  .cs-tab-card { padding: 16px 14px 18px; }
+  .cs-sponsors { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .cs-sponsor { height: 92px; padding: 14px; }
+  .cs-sponsor img { max-height: 48px; }
 }

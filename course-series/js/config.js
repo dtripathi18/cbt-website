@@ -55,46 +55,14 @@ const COURSE_SERIES_CONFIG = {
     brochureUrl: "",
   },
 
-  // Each module appears in exactly one day. Modules have no individual price
-  // — the real fee structure (below, `feeTiers`) prices by how many modules
-  // are picked in total, not which ones. Titles and day assignments come from
-  // the module-name table (A10:C16, one column per day) on the "Grid" sheet
-  // of reference/cbt_event.xlsx.
-  days: [
-    {
-      label: "Day 1",
-      date: "December 8, 2026",
-      modules: [
-        { code: "M1", title: "Fundamentals of Upstream Process Development" },
-        { code: "M4", title: "Analytical Characterization of Biosimilars" },
-        { code: "M7", title: "Design of Experiments for Bioprocess Experimentation" },
-        { code: "M10", title: "Drug Development: Concepts and Frameworks" },
-        { code: "M13", title: "Critical Quality Attribute in Biotherapeutics" },
-        { code: "M15", title: "AI & Machine Learning in Bioprocess: From Principles to Practice" },
-      ],
-    },
-    {
-      label: "Day 2",
-      date: "December 9, 2026",
-      modules: [
-        { code: "M2", title: "Downstream Processing for Biopharmaceutical Production" },
-        { code: "M5", title: "Formulation Science for Biotherapeutics: From QTPP to Stable Drug Products (Part I)" },
-        { code: "M8", title: "Commercial Biopharma Manufacturing — Mastering Process and Facility Operations (Part I)" },
-        { code: "M11", title: "Regulatory Framework for Lifecycle Management of Products" },
-        { code: "M14", title: "Smart Bioprocessing: From Data to Decisions" },
-      ],
-    },
-    {
-      label: "Day 3",
-      date: "December 10, 2026",
-      modules: [
-        { code: "M3", title: "Next Generation Bioprocessing" },
-        { code: "M6", title: "Formulation Science for Biotherapeutics: From QTPP to Patient-Centric Delivery (Part II)" },
-        { code: "M9", title: "Commercial Biopharma Manufacturing — Tech Ops & Advanced Systems (Part II)" },
-        { code: "M12", title: "Biosimilar Guidelines" },
-      ],
-    },
-  ],
+  // Days, modules (title, venue, speakers) and speaker details live in
+  // js/programme-data.js, which the admin tool (admin-tool/) rewrites.
+  // Modules have no individual price — the fee structure (`feeTiers`, below)
+  // prices by how many modules are picked in total, not which ones.
+  days: PROGRAMME_DATA.days,
+  speakers: PROGRAMME_DATA.speakers,
+
+  sponsors: [],
 
   // From the fee table on the "Grid" sheet of reference/cbt_event.xlsx.
   // Already inclusive of 18% GST. Priced per how many modules (1-3) are
@@ -113,21 +81,14 @@ const COURSE_SERIES_CONFIG = {
     discountPercent: 10,
     endsAt: "2026-11-17T00:00:00+05:30",
     note: "Includes a 10% early bird discount on module fees, valid till 16 November 2026 (IST).",
+    // Shown under the fee table on the About page, which lists undiscounted fees.
+    summary: "Early bird: 10% off module fees when you register by 16 November 2026 (IST).",
   },
 
-  // Room/venue schedule (one row per room, one cell per day), from the venue
-  // table (A1:D8) on the "Grid" sheet of reference/cbt_event.xlsx. Module
-  // codes reference the same modules defined in `days` above (titles aren't
-  // duplicated here).
+  // Room/venue schedule for the register page (one row per room, one cell
+  // per day), derived from each module's venue in js/programme-data.js.
   roomScheduleTime: "8:30am – 6:30pm",
-  roomSchedule: [
-    { room: "LHC 408", cells: ["M1", "M2", "M3"] },
-    { room: "LHC 410", cells: ["M4", "M5", "M6"] },
-    { room: "LHC 416", cells: ["M7", "M8", "M9"] },
-    { room: "LHC 418", cells: ["M10", "M11", "M12"] },
-    { room: "LHC 421", cells: ["M13", "M14", null] },
-    { room: "LHC 422", cells: ["M15", null, null] },
-  ],
+  roomSchedule: buildRoomSchedule(PROGRAMME_DATA.days),
 
   // Matches the live form's real rates (these ARE real — the form itself
   // listed these accommodation tiers). Accommodation is priced separately
@@ -182,3 +143,20 @@ const COURSE_SERIES_CONFIG = {
   // bound to the registrations Sheet + Drive folder.
   submitEndpointUrl: "https://script.google.com/macros/s/AKfycbx1XRtNAskq7Z4KVDh2HNKBI4T-12_zyYbLWUg6Pfyzy9SrO6SNZ3DPTTBaMXKlwlk9/exec",
 };
+
+// Room × day matrix: rooms sorted naturally (LHC 408, LHC 410, …), each
+// cell the code of the module in that room on that day, or null.
+function buildRoomSchedule(days) {
+  const rooms = [];
+  days.forEach((day) => day.modules.forEach((m) => {
+    if (m.venue && !rooms.includes(m.venue)) rooms.push(m.venue);
+  }));
+  rooms.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  return rooms.map((room) => ({
+    room,
+    cells: days.map((day) => {
+      const mod = day.modules.find((m) => m.venue === room);
+      return mod ? mod.code : null;
+    }),
+  }));
+}
