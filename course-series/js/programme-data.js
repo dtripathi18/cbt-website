@@ -210,7 +210,7 @@ const PROGRAMME_DATA = {
       "id": "anurag-rathore",
       "name": "Anurag S. Rathore",
       "affiliation": "IIT Delhi",
-      "image": "assets/images/speakers/anurag-rathore.jpg?v=20260924173131",
+      "image": "",
       "description": ""
     },
     {
@@ -273,7 +273,7 @@ const PROGRAMME_DATA = {
       "id": "james-gomes",
       "name": "James Gomes",
       "affiliation": "IIT Delhi",
-      "image": "assets/images/speakers/james-gomes.jpg?v=20260924173131",
+      "image": "",
       "description": ""
     },
     {
