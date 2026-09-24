@@ -16,10 +16,12 @@ import {
 } from "./lib/config.js";
 import { readLocalData, saveLocalData } from "./lib/data-file.js";
 import { postToServer, pullRemoteData } from "./lib/deploy.js";
-import { extractProgramme } from "./lib/extract.js";
+import { claudeCodeVersion, extractProgramme, pruneOldRuns } from "./lib/extract.js";
 
 const env = loadEnv();
 fs.mkdirSync(STAGED_DIR, { recursive: true });
+pruneOldRuns();
+const claudeVersion = claudeCodeVersion();
 
 const app = express();
 app.use(express.json({ limit: "80mb" }));
@@ -54,7 +56,7 @@ app.get("/api/state", handle(() => ({
   settings: readSettings(),
   env: {
     envFile: ENV_FILE,
-    hasApiKey: Boolean(env.apiKey),
+    claudeCode: claudeVersion,
     sshConfigured: sshConfigured(env.ssh),
     sshTarget: env.ssh.host ? `${env.ssh.username}@${env.ssh.host}:${env.ssh.remoteRoot}` : "",
   },
@@ -65,8 +67,6 @@ app.post("/api/settings", handle((req) => ({ settings: writeSettings(req.body) }
 app.post("/api/extract", handle(async (req) => {
   const { files = [], currentData, completeProgramme = false, extractBios = true } = req.body;
   return extractProgramme({
-    apiKey: env.apiKey,
-    workspaceId: env.workspaceId,
     files,
     currentNested: currentData || readLocalData(),
     completeProgramme: Boolean(completeProgramme),
@@ -104,6 +104,6 @@ app.post("/api/post", handle(async (req) => {
 
 app.listen(env.port, "127.0.0.1", () => {
   console.log(`CBT programme admin running at http://localhost:${env.port}`);
-  if (!env.apiKey) console.log(`⚠ No ANTHROPIC_API_KEY — add it to ${ENV_FILE}`);
+  console.log(claudeVersion ? `Extraction via ${claudeVersion} (your Claude subscription)` : "⚠ Claude Code not found on PATH — extraction is disabled.");
   if (!sshConfigured(env.ssh)) console.log(`⚠ SSH not configured — Post is disabled until ${ENV_FILE} has the server login.`);
 });

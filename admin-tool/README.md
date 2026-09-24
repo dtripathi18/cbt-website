@@ -12,14 +12,22 @@ npm start
 
 Then open http://localhost:5178. It only accepts connections from this computer.
 
-## Secrets
+## How Claude is used
 
-The API key and the server login are kept in `C:\Users\<you>\.cbt-admin\.env`. That's outside the website folder, so they can't be uploaded with the site by mistake. You can point it somewhere else with the `CBT_ADMIN_ENV` environment variable.
+Extraction runs **Claude Code** on this computer in its non-interactive mode (`claude -p`). It uses the subscription you're logged into Claude Code with, so there's no API key and no API billing. Each run counts toward your plan's usage like a normal Claude Code session. A full brochure takes about a minute.
+
+- Claude Code must be installed and logged in. Run `claude` once in a terminal if it isn't.
+- It runs read-only: only the Read tool, with no shell, web or file edits, and only inside that run's work folder in `admin-tool/staged/`.
+- Any `ANTHROPIC_API_KEY` in the environment is removed before Claude Code starts, so it never switches to paid API billing.
+- For each PDF, the tool writes every page as text and as an image, plus the candidate speaker photos cut out of it. Claude Code reads those files and returns the updated programme as schema-checked JSON. The tool then enforces the rules in code: blank results keep existing bios and photos, partial updates never remove anything, and ignored names never get in.
+- Optional `.env` settings: `CLAUDE_BIN` (path to `claude` if it isn't on PATH) and `CLAUDE_MODEL` (default `opus`).
+
+## Server login
+
+The server login is kept in `C:\Users\<you>\.cbt-admin\.env`. That's outside the website folder, so it can't be uploaded with the site by mistake. You can point it somewhere else with the `CBT_ADMIN_ENV` environment variable.
 
 | Setting | What it is |
 |---|---|
-| `ANTHROPIC_API_KEY` | Claude API key |
-| `ANTHROPIC_WORKSPACE_ID` | Needed if the key isn't limited to one workspace (Console → Settings → Workspaces, `wrkspc_…`) |
 | `SSH_HOST`, `SSH_PORT`, `SSH_USERNAME` | Server login |
 | `SSH_PRIVATE_KEY_PATH` or `SSH_PASSWORD` | A key file is preferred. Set one of the two |
 | `SSH_REMOTE_ROOT` | Folder on the server that holds `index.html` and `course-series/` (default `/var/www/cbt/https/html`) |

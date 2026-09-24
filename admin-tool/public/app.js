@@ -75,9 +75,9 @@ async function init() {
   state.working = clone(state.saved);
   $("ignoreNames").value = settings.ignoreNames.join(", ");
 
-  $("apiChip").textContent = env.hasApiKey ? "Claude ✓" : "No API key";
-  $("apiChip").className = `chip ${env.hasApiKey ? "ok" : "bad"}`;
-  $("apiChip").title = env.hasApiKey ? "" : `Add ANTHROPIC_API_KEY to ${env.envFile}`;
+  $("apiChip").textContent = env.claudeCode ? "Claude Code ✓" : "Claude Code not found";
+  $("apiChip").className = `chip ${env.claudeCode ? "ok" : "bad"}`;
+  $("apiChip").title = env.claudeCode ? `${env.claudeCode} — uses your Claude subscription` : "Install Claude Code and log in (run `claude` once in a terminal)";
   $("sshChip").textContent = env.sshConfigured ? "Server ✓" : "Server login missing";
   $("sshChip").className = `chip ${env.sshConfigured ? "ok" : "bad"}`;
   $("sshChip").title = env.sshConfigured ? env.sshTarget : `Add the SSH settings to ${env.envFile}`;
@@ -114,7 +114,7 @@ function renderFiles() {
   $("fileList").innerHTML = state.files
     .map((f, i) => `<li>${esc(f.name)} <span class="size">${size(f.size)}</span><button class="icon-btn" data-remove-file="${i}" title="Remove">✕</button></li>`)
     .join("");
-  $("extractBtn").disabled = !state.files.length || !state.env.hasApiKey;
+  $("extractBtn").disabled = !state.files.length || !state.env.claudeCode;
 }
 
 $("fileList").addEventListener("click", (e) => {
@@ -137,7 +137,7 @@ $("extractBtn").addEventListener("click", async () => {
   status.className = "status";
   const started = Date.now();
   const tick = () => {
-    status.innerHTML = `<span class="spinner"></span> Claude is reading ${state.files.length} file(s)… ${Math.round((Date.now() - started) / 1000)}s — a full brochure usually takes 1–3 minutes.`;
+    status.innerHTML = `<span class="spinner"></span> Claude Code is reading ${state.files.length} file(s)… ${Math.round((Date.now() - started) / 1000)}s — a full brochure can take several minutes.`;
   };
   tick();
   const timer = setInterval(tick, 1000);
@@ -153,8 +153,7 @@ $("extractBtn").addEventListener("click", async () => {
     const changes = diff(state.working, proposed);
     state.proposal = { changes, notes: result.notes, proposed, selected: new Set(changes.map((c) => c.key)) };
     status.textContent = `Done in ${Math.round((Date.now() - started) / 1000)}s — ${changes.length} change(s) found` +
-      (result.photosFound ? `, ${result.photosFound} candidate photo(s) checked` : "") +
-      ` (${result.usage.input_tokens.toLocaleString()} input / ${result.usage.output_tokens.toLocaleString()} output tokens).`;
+      (result.photosFound ? `, ${result.photosFound} candidate photo(s) checked` : "") + ".";
     renderReview();
   } catch (err) {
     status.className = "status error";

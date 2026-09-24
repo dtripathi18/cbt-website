@@ -17,16 +17,13 @@ export const STAGED_DIR = path.join(TOOL_DIR, "staged");
 export const BACKUP_DIR = path.join(TOOL_DIR, "backups");
 export const SETTINGS_FILE = path.join(TOOL_DIR, "settings.json");
 
-// Secrets (API key, SSH login) live outside the website folder so they can
+// Secrets (the SSH login) live outside the website folder so they can
 // never be uploaded along with the site by accident.
 export const ENV_FILE = process.env.CBT_ADMIN_ENV || path.join(os.homedir(), ".cbt-admin", ".env");
 
 export function loadEnv() {
   if (fs.existsSync(ENV_FILE)) process.loadEnvFile(ENV_FILE);
   return {
-    apiKey: process.env.ANTHROPIC_API_KEY || "",
-    // Needed when the API key isn't scoped to a single workspace.
-    workspaceId: process.env.ANTHROPIC_WORKSPACE_ID || "",
     port: Number(process.env.PORT || 5178),
     ssh: {
       host: process.env.SSH_HOST || "",

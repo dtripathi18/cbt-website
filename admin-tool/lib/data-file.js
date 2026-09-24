@@ -64,7 +64,8 @@ export function saveLocalData(nested) {
   fs.mkdirSync(SPEAKER_IMAGE_DIR, { recursive: true });
   data.speakers.forEach((s) => {
     if (!s.image || !s.image.startsWith("staged:")) return;
-    const stagedFile = path.join(STAGED_DIR, path.basename(s.image.slice("staged:".length)));
+    const stagedFile = path.resolve(STAGED_DIR, s.image.slice("staged:".length));
+    if (!stagedFile.startsWith(STAGED_DIR + path.sep)) throw new Error(`Invalid photo path for ${s.name}.`);
     if (!fs.existsSync(stagedFile)) throw new Error(`Staged photo for ${s.name} is missing (${stagedFile}). Add the photo again.`);
     const ext = path.extname(stagedFile).toLowerCase() || ".jpg";
     fs.readdirSync(SPEAKER_IMAGE_DIR)
