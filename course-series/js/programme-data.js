@@ -16,8 +16,7 @@ const PROGRAMME_DATA = {
             "andreas-castan",
             "ranil-wickramasinghe",
             "james-gomes",
-            "dhananjay-patankar",
-            "manidipa-banerjee"
+            "dhananjay-patankar"
           ]
         },
         {
@@ -54,7 +53,7 @@ const PROGRAMME_DATA = {
         },
         {
           "code": "M13",
-          "title": "Critical Quality Attribute in Biotherapeutics",
+          "title": "Critical Quality Attribute for Biotherapeutics",
           "venue": "LHC 421",
           "speakers": [
             "hiten-gutka",
@@ -90,9 +89,8 @@ const PROGRAMME_DATA = {
             "todd-przybycien",
             "ranil-wickramasinghe",
             "andrew-maier",
-            "nitika",
-            "subhankar",
-            "brajnandan-thakur"
+            "brajnandan-thakur",
+            "nitika"
           ]
         },
         {
@@ -124,8 +122,7 @@ const PROGRAMME_DATA = {
             "priya-kulkarni",
             "ravindra-khare",
             "dhananjay-patankar",
-            "narendra-chirmule",
-            "nikhil-kateja"
+            "narendra-chirmule"
           ]
         },
         {
@@ -155,7 +152,8 @@ const PROGRAMME_DATA = {
           "speakers": [
             "anurag-rathore",
             "andreas-castan",
-            "mark-schofield"
+            "mark-schofield",
+            "nitika"
           ]
         },
         {
@@ -164,7 +162,8 @@ const PROGRAMME_DATA = {
           "venue": "LHC 410",
           "speakers": [
             "hiten-gutka",
-            "indrajit-ghosh"
+            "indrajit-ghosh",
+            "satish-singh"
           ]
         },
         {
@@ -180,7 +179,7 @@ const PROGRAMME_DATA = {
         },
         {
           "code": "M12",
-          "title": "Biosimilar Guidelines",
+          "title": "Updates to Guidelines on Similar Biologics",
           "venue": "LHC 418",
           "speakers": [
             "arvind-kukrety",
@@ -211,7 +210,7 @@ const PROGRAMME_DATA = {
       "id": "anurag-rathore",
       "name": "Anurag S. Rathore",
       "affiliation": "IIT Delhi",
-      "image": "",
+      "image": "assets/images/speakers/anurag-rathore.jpg?v=20260924173131",
       "description": ""
     },
     {
@@ -238,7 +237,7 @@ const PROGRAMME_DATA = {
     {
       "id": "dhananjay-patankar",
       "name": "Dhananjay Patankar",
-      "affiliation": "Industry Expert",
+      "affiliation": "Biopharmaceutical Consultant",
       "image": "",
       "description": ""
     },
@@ -274,14 +273,7 @@ const PROGRAMME_DATA = {
       "id": "james-gomes",
       "name": "James Gomes",
       "affiliation": "IIT Delhi",
-      "image": "",
-      "description": ""
-    },
-    {
-      "id": "manidipa-banerjee",
-      "name": "Manidipa Banerjee",
-      "affiliation": "IIT Delhi",
-      "image": "",
+      "image": "assets/images/speakers/james-gomes.jpg?v=20260924173131",
       "description": ""
     },
     {
@@ -308,7 +300,7 @@ const PROGRAMME_DATA = {
     {
       "id": "narendra-chirmule",
       "name": "Narendra Chirmule",
-      "affiliation": "Symphonytech Biologics, USA",
+      "affiliation": "SymphonyTech Biologics, USA",
       "image": "",
       "description": ""
     },
@@ -364,7 +356,7 @@ const PROGRAMME_DATA = {
     {
       "id": "ravindra-khare",
       "name": "Ravindra Khare",
-      "affiliation": "Symphonytech Biologics, India",
+      "affiliation": "SymphonyTech Biologics, India",
       "image": "",
       "description": ""
     },
@@ -393,13 +385,6 @@ const PROGRAMME_DATA = {
       "id": "satish-singh",
       "name": "Satish Singh",
       "affiliation": "Astria Therapeutics",
-      "image": "",
-      "description": ""
-    },
-    {
-      "id": "subhankar",
-      "name": "Subhankar",
-      "affiliation": "IIT Delhi",
       "image": "",
       "description": ""
     },
