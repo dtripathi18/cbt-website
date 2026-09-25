@@ -77,8 +77,8 @@
         </tr>
       `).join("")}
     </tbody>`;
-  document.getElementById("scheduleNote").textContent =
-    `Timing: ${cfg.roomScheduleTime} each day. Modules run in parallel across rooms — you can attend only one module per day (see "Choose Your Modules" below for full titles).`;
+  document.getElementById("scheduleNote").innerHTML =
+    `<strong>Timing: ${cfg.roomScheduleTime} each day. Modules run in parallel across rooms — you can attend only one module per day (see "Choose Your Modules" below for full titles).</strong>`;
 
   // ---- Position dropdown (descriptive only, doesn't affect pricing) ----
   const positionSelect = document.getElementById("fPosition");
