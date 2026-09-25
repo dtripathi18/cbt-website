@@ -89,8 +89,7 @@ const PROGRAMME_DATA = {
             "todd-przybycien",
             "ranil-wickramasinghe",
             "andrew-maier",
-            "brajnandan-thakur",
-            "nitika"
+            "brajnandan-thakur"
           ]
         },
         {
@@ -100,8 +99,7 @@ const PROGRAMME_DATA = {
           "speakers": [
             "hiten-gutka",
             "satish-singh",
-            "nidhi-aggarwal",
-            "debasmita-chakraborty"
+            "nidhi-aggarwal"
           ]
         },
         {
@@ -152,8 +150,7 @@ const PROGRAMME_DATA = {
           "speakers": [
             "anurag-rathore",
             "andreas-castan",
-            "mark-schofield",
-            "nitika"
+            "mark-schofield"
           ]
         },
         {
@@ -224,13 +221,6 @@ const PROGRAMME_DATA = {
       "id": "brajnandan-thakur",
       "name": "Brajnandan Thakur",
       "affiliation": "Merck",
-      "image": "",
-      "description": ""
-    },
-    {
-      "id": "debasmita-chakraborty",
-      "name": "Debasmita Chakraborty",
-      "affiliation": "IIT Delhi",
       "image": "",
       "description": ""
     },
@@ -315,13 +305,6 @@ const PROGRAMME_DATA = {
       "id": "nikhil-kateja",
       "name": "Nikhil Kateja",
       "affiliation": "Edna Biolabs",
-      "image": "",
-      "description": ""
-    },
-    {
-      "id": "nitika",
-      "name": "Nitika",
-      "affiliation": "IIT Delhi",
       "image": "",
       "description": ""
     },
