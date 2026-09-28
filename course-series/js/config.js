@@ -27,11 +27,11 @@ const COURSE_SERIES_CONFIG = {
     audience: [
       {
         label: "Industry",
-        body: "Professionals working across biopharmaceutical process development, manufacturing, quality, analytical development, product development and regulatory affairs.",
+        body: "Professionals working across biopharmaceutical process development, manufacturing, quality, analytical development, product development and regulatory affairs",
       },
       {
         label: "Academia",
-        body: "Faculty members, research scholars and postgraduate students engaged in biopharmaceutical sciences, biotechnology, pharmaceutical sciences and related disciplines.",
+        body: "Faculty members, research scholars and postgraduate students engaged in biopharmaceutical sciences, biotechnology, pharmaceutical sciences and related disciplines",
       },
     ],
     // Each point is an HTML string, or { html, earlyBirdOnly: true } for one
@@ -48,7 +48,7 @@ const COURSE_SERIES_CONFIG = {
 
   intro: {
     heading: "Course Registration",
-    body: 'Center of Excellence for Biopharmaceutical Technology (COE-CBT) is organizing its annual CBT Course Series 2026 from 8th - 10th Dec. Researchers and professionals from both academia and industry are cordially invited to participate.',
+    body: 'Center of Excellence for Biopharmaceutical Technology (COE-CBT) is organizing its annual "CBT Course Series 2026" from 8th - 10th Dec. Researchers and professionals from both academia and industry are cordially invited to participate.',
     bannerImage: "assets/images/course-banner.png?v=2026-09-23",
     brochureLabel: "Brochure",
     brochureUrl: "https://cbt-brochure.s3.us-east-1.amazonaws.com/brochure.pdf",
@@ -70,8 +70,8 @@ const COURSE_SERIES_CONFIG = {
     academia: { 1: 3000, 2: 5000, 3: 6500 },
     industry: { 1: 5000, 2: 9000, 3: 12000 },
   },
-  feeNote: "Fees mentioned above are inclusive of 18% GST.",
-  feeWarning: "*Fee once paid is non-refundable.",
+  feeNote: "Fees mentioned above are inclusive of 18% GST",
+  feeWarning: "*Fee once paid is non-refundable",
 
   // Early bird: % off the module fee (accommodation is added undiscounted on
   // top). Applies through the end of 16 Nov IST, so it switches off at
@@ -79,8 +79,8 @@ const COURSE_SERIES_CONFIG = {
   earlyBird: {
     discountPercent: 10,
     endsAt: "2026-11-17T00:00:00+05:30",
-    note: "Includes a 10% early bird discount on module fees, valid till 16 November 2026 (IST).",
-    summary: "Early bird: Register by 16th November 2026 (IST) to avail 10% discount on module fees.",
+    note: "Includes a 10% early bird discount on module fees, valid till 16 November 2026 (IST)",
+    summary: "Early bird: Register by 16th November 2026 (IST) to avail 10% discount on module fees",
   },
 
   // Room/venue schedule for the register page (one row per room, one cell
