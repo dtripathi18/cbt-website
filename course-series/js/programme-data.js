@@ -98,8 +98,7 @@ const PROGRAMME_DATA = {
           "venue": "LHC 410",
           "speakers": [
             "hiten-gutka",
-            "satish-singh",
-            "nidhi-aggarwal"
+            "satish-singh"
           ]
         },
         {
@@ -291,13 +290,6 @@ const PROGRAMME_DATA = {
       "id": "narendra-chirmule",
       "name": "Narendra Chirmule",
       "affiliation": "SymphonyTech Biologics, USA",
-      "image": "",
-      "description": ""
-    },
-    {
-      "id": "nidhi-aggarwal",
-      "name": "Nidhi Aggarwal",
-      "affiliation": "IIT Delhi",
       "image": "",
       "description": ""
     },
