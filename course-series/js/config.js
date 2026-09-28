@@ -141,9 +141,8 @@ const COURSE_SERIES_CONFIG = {
 
   // Apps Script Web App (course-series/apps-script/Code.gs), deployed and
   // bound to the registrations Sheet + Drive folder.
-  submitEndpointUrl: "https://script.google.com/macros/s/AKfycbx1XRtNAskq7Z4KVDh2HNKBI4T-12_zyYbLWUg6Pfyzy9SrO6SNZ3DPTTBaMXKlwlk9/exec",
+  submitEndpointUrl: "https://script.google.com/macros/s/AKfycbzCtWk6GxocAL06RBOoSJ_fhPE6f-ILQ0Q2E_PlVrAW4VG9jrcm4619VAHYBb4sPrRa/exec",
 };
-
 // Room × day matrix: rooms sorted naturally (LHC 408, LHC 410, …), each
 // cell the code of the module in that room on that day, or null.
 function buildRoomSchedule(days) {
