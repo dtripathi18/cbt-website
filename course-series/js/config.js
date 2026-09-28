@@ -50,9 +50,8 @@ const COURSE_SERIES_CONFIG = {
     // Bump the ?v= value whenever course-banner.png is replaced, so browsers
     // and the host's cache fetch the new image instead of the old one.
     bannerImage: "assets/images/course-banner.png?v=2026-09-23",
-    brochureLabel: "More Details & Brochure",
-    // TODO: placeholder — user will provide the real link later.
-    brochureUrl: "",
+    brochureLabel: "Brochure",
+    brochureUrl: "https://cbt-brochure.s3.us-east-1.amazonaws.com/brochure.pdf",
   },
 
   // Days, modules (title, venue, speakers) and speaker details live in
