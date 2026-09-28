@@ -15,7 +15,7 @@ const COURSE_SERIES_CONFIG = {
 
   event: {
     name: "11th Annual CBT Course Series",
-    dates: "December 8–10, 2026",
+    dates: "December 8-10, 2026",
     venue: "IIT Delhi",
   },
 
@@ -27,28 +27,28 @@ const COURSE_SERIES_CONFIG = {
     audience: [
       {
         label: "Industry",
-        body: "Process, quality, and regulatory professionals working in biopharmaceutical manufacturing and product development.",
+        body: "Professionals working across biopharmaceutical process development, manufacturing, quality, analytical development, product development and regulatory affairs.",
       },
       {
         label: "Academia",
-        body: "Faculty, research scholars, and postgraduate students working in biopharmaceutical sciences and related disciplines.",
+        body: "Faculty members, research scholars and postgraduate students engaged in biopharmaceutical sciences, biotechnology, pharmaceutical sciences and related disciplines.",
       },
     ],
+    // Each point is an HTML string, or { html, earlyBirdOnly: true } for one
+    // that stops rendering once `earlyBird.endsAt` (below) has passed.
     highlights: [
-      "3 days of sessions across 15 modules — attend as many or as few as suit you",
-      "One module per day is selected at registration; each day runs modules in parallel across rooms",
-      "Separate fee tiers for academia and industry, based on how many modules you pick",
+      "3 days of live interactive sessions",
+      "15 specialized modules shaping the future of next-gen bioprocessing, biotherapeutics, regulatory framework and advanced data analytics",
+      {
+        html: '🎁 Early Bird Offer: Register by 16th November (IST) to avail <mark class="cs-highlight-mark">10% discount</mark> on module fees',
+        earlyBirdOnly: true,
+      },
     ],
   },
 
-  // Shared intro copy — used for the banner above the form (step 1) and for
-  // the About page's hero. Mirrors the description text from the live
-  // Google Form.
   intro: {
     heading: "Course Registration",
-    body: 'Center of Excellence for Biopharmaceutical Technology (COE-CBT) is organizing our annual training event "CBT Course Series 2026" from 8th – 10th Dec 2026. Attendees from industry and academia are welcome to participate.',
-    // Bump the ?v= value whenever course-banner.png is replaced, so browsers
-    // and the host's cache fetch the new image instead of the old one.
+    body: 'Center of Excellence for Biopharmaceutical Technology (COE-CBT) is organizing its annual CBT Course Series 2026 from 8th - 10th Dec. Researchers and professionals from both academia and industry are cordially invited to participate.',
     bannerImage: "assets/images/course-banner.png?v=2026-09-23",
     brochureLabel: "Brochure",
     brochureUrl: "https://cbt-brochure.s3.us-east-1.amazonaws.com/brochure.pdf",
@@ -70,7 +70,7 @@ const COURSE_SERIES_CONFIG = {
     academia: { 1: 3000, 2: 5000, 3: 6500 },
     industry: { 1: 5000, 2: 9000, 3: 12000 },
   },
-  feeNote: "Fees above are inclusive of 18% GST.",
+  feeNote: "Fees mentioned above are inclusive of 18% GST.",
   feeWarning: "*Fee once paid is non-refundable.",
 
   // Early bird: % off the module fee (accommodation is added undiscounted on
@@ -80,13 +80,12 @@ const COURSE_SERIES_CONFIG = {
     discountPercent: 10,
     endsAt: "2026-11-17T00:00:00+05:30",
     note: "Includes a 10% early bird discount on module fees, valid till 16 November 2026 (IST).",
-    // Shown under the fee table on the About page, which lists undiscounted fees.
-    summary: "Early bird: 10% off module fees when you register by 16 November 2026 (IST).",
+    summary: "Early bird: Register by 16th November 2026 (IST) to avail 10% discount on module fees.",
   },
 
   // Room/venue schedule for the register page (one row per room, one cell
   // per day), derived from each module's venue in js/programme-data.js.
-  roomScheduleTime: "8:30am – 6:30pm",
+  roomScheduleTime: "8:30am - 6:30pm",
   roomSchedule: buildRoomSchedule(PROGRAMME_DATA.days),
 
   // Matches the live form's real rates (these ARE real — the form itself
@@ -135,7 +134,7 @@ const COURSE_SERIES_CONFIG = {
       "CBT Team",
     ],
     // postPaymentEmail (above) is reused here rather than duplicated.
-    noteBeforeEmail: "If you don't get a copy of your responses (acknowledgement) mail within 24–48 hours, please drop a mail on",
+    noteBeforeEmail: "If you don't get a copy of your responses (acknowledgement) mail within 24-48 hours, please drop a mail on",
   },
 
   // Apps Script Web App (course-series/apps-script/Code.gs), deployed and

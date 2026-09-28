@@ -43,7 +43,7 @@ function initMainSiteLinks(cfg) {
 // Fee tier table markup — shared by the register page and the about page so
 // the two never drift out of sync.
 function renderFeeTableHTML(cfg) {
-  const tierLabels = { 1: "Pick any one", 2: "Pick any two", 3: "Pick any three" };
+  const tierLabels = { 1: "Choose any one", 2: "Choose any two", 3: "Choose any three" };
   const moduleCount = cfg.days.reduce((sum, day) => sum + day.modules.length, 0);
   return `
     <thead>
@@ -52,7 +52,7 @@ function renderFeeTableHTML(cfg) {
     <tbody>
       ${[1, 2, 3].map((n) => `
         <tr>
-          <td>M1–M${moduleCount} (${tierLabels[n]})</td>
+          <td>M1-M${moduleCount} (${tierLabels[n]})</td>
           <td>${formatINR(cfg.feeTiers.academia[n])}</td>
           <td>${formatINR(cfg.feeTiers.industry[n])}</td>
         </tr>

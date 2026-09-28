@@ -547,6 +547,13 @@ a { color: var(--cs-accent-dark); }
   padding-left: 22px;
   font-size: 0.97rem;
 }
+.cs-highlight-mark {
+  padding: 0 3px;
+  border-radius: 3px;
+  background: linear-gradient(120deg, #bbf7d0 0%, #bae6fd 100%);
+  color: var(--cs-accent-dark);
+  font-weight: 700;
+}
 .cs-about-highlights li::before {
   content: "";
   position: absolute;
