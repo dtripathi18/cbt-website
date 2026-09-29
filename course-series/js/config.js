@@ -65,9 +65,9 @@ const COURSE_SERIES_CONFIG = {
   // size from first to last. `tall: true` lets a portrait logo fill its box.
   sponsors: [
     [
+      { name: "ACS BIOT", logo: "assets/images/sponsors/acs_biot.jpg", url: "https://acsbiot.org/" },
       { name: "Cytiva", logo: "assets/images/sponsors/cytiva.png", url: "https://www.cytivalifesciences.com/en/in" },
       { name: "Merck", logo: "assets/images/sponsors/merck.png", url: "https://www.merckgroup.com/en" },
-      { name: "ACS BIOT", logo: "assets/images/sponsors/acs_biot.jpg", url: "https://acsbiot.org/" },
     ],
     [
       { name: "Indian Pharmacopoeia Commission", logo: "assets/images/sponsors/ipc.png", url: "https://www.ipc.gov.in/", tall: true },
