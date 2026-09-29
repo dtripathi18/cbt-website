@@ -64,8 +64,6 @@
   const chevronSVG ='<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const pinSVG ='<svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path d="M10 18s6-5.2 6-10a6 6 0 10-12 0c0 4.8 6 10 6 10z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="10" cy="8" r="2.2" fill="currentColor"/></svg>';
 
-  document.getElementById("curriculumHint").innerHTML =`<strong>*Choose one module per day at registration. Modules run in parallel - review the options and select your preferred module. </strong>`;
-
   const curriculumDays = document.getElementById("curriculumDays");
   cfg.days.forEach((day) => {
     const dayBlock = el("div", "cs-cday");

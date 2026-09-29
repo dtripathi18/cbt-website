@@ -131,6 +131,17 @@ a { color: var(--cs-accent-dark); }
   pointer-events: none;
 }
 
+.cs-intro-note {
+  margin: 22px 0 0;
+  padding: 14px 18px;
+  max-width: 70ch;
+  background: var(--cs-accent-soft);
+  border-left: 3px solid var(--cs-accent);
+  border-radius: var(--cs-radius-sm);
+  color: var(--cs-ink);
+  font-size: 0.97rem;
+}
+
 /* ---------- Stepped timeline ---------- */
 .cs-form { display: flex; flex-direction: column; gap: 44px; }
 .cs-section {
