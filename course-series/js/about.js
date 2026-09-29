@@ -155,16 +155,24 @@
 
   // ---- Sponsors ----
   const sponsorGrid = document.getElementById("sponsorGrid");
-  cfg.sponsors.forEach((sp) => {
-    const card = el("div", "cs-sponsor");
-    const img = document.createElement("img");
-    img.src = sp.logo;
-    img.alt = sp.name;
-    img.loading = "lazy";
-    // Fall back to the sponsor's name if the logo file is missing.
-    img.onerror = () => { card.textContent = sp.name; };
-    card.appendChild(img);
-    sponsorGrid.appendChild(card);
+  cfg.sponsors.forEach((rowSponsors, i) => {
+    const row = el("div", `cs-sponsor-row cs-sponsor-row--${i + 1}`);
+    rowSponsors.forEach((sp) => {
+      const card = el("a", sp.tall ? "cs-sponsor cs-sponsor--tall" : "cs-sponsor");
+      card.href = sp.url;
+      card.target = "_blank";
+      card.rel = "noopener noreferrer";
+      card.title = sp.name;
+      const img = document.createElement("img");
+      img.src = sp.logo;
+      img.alt = sp.name;
+      img.loading = "lazy";
+      // Fall back to the sponsor's name if the logo file is missing.
+      img.onerror = () => { card.textContent = sp.name; };
+      card.appendChild(img);
+      row.appendChild(card);
+    });
+    sponsorGrid.appendChild(row);
   });
 
   // ---- Local tab navbar. The active tab is mirrored in the URL hash

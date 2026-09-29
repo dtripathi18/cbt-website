@@ -893,16 +893,33 @@ a { color: var(--cs-accent-dark); }
 
 /* ---------- About page: sponsors ---------- */
 .cs-sponsors {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 14px;
 }
+.cs-sponsor-row {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+/* Each row is a size tier: row 1 largest, row 3 smallest. */
+.cs-sponsor-row {
+  --sp-width: 200px;
+  --sp-height: 112px;
+  --sp-pad: 18px 22px;
+  --sp-logo: 64px;
+}
+.cs-sponsor-row--1 { --sp-width: 290px; --sp-height: 150px; --sp-pad: 20px 28px; --sp-logo: 100px; }
+.cs-sponsor-row--2 { --sp-width: 200px; --sp-height: 110px; --sp-pad: 16px 22px; --sp-logo: 70px; }
+.cs-sponsor-row--3 { --sp-width: 180px; --sp-height: 92px; --sp-pad: 14px 20px; --sp-logo: 70px; }
 .cs-sponsor {
+  flex: 0 1 var(--sp-width);
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 112px;
-  padding: 18px 22px;
+  height: var(--sp-height);
+  padding: var(--sp-pad);
   background: var(--cs-paper);
   border: 1px solid var(--cs-line);
   border-radius: var(--cs-radius-sm);
@@ -912,8 +929,16 @@ a { color: var(--cs-accent-dark); }
 }
 .cs-sponsor img {
   max-width: 100%;
-  max-height: 64px;
+  max-height: var(--sp-logo);
   object-fit: contain;
+}
+/* Portrait logos (IPC) would shrink to a sliver under the height cap, so
+   let them use nearly the full box height instead. The box stays the same. */
+.cs-sponsor--tall { padding-top: 6px; padding-bottom: 6px; }
+.cs-sponsor--tall img { max-height: 100%; }
+.cs-sponsor:hover,
+.cs-sponsor:focus-visible {
+  border-color: var(--cs-ink-soft);
 }
 
 .cs-about-cta-band {
@@ -961,7 +986,10 @@ a { color: var(--cs-accent-dark); }
   .cs-cday { padding: 14px 12px 2px; }
   .cs-acc-grid { grid-template-columns: 1fr; }
   .cs-tab-card { padding: 16px 14px 18px; }
-  .cs-sponsors { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .cs-sponsor { height: 92px; padding: 14px; }
-  .cs-sponsor img { max-height: 48px; }
+  .cs-sponsors, .cs-sponsor-row { gap: 10px; }
+  .cs-sponsor-row { flex-wrap: wrap; }
+  .cs-sponsor-row--1 { --sp-height: 118px; --sp-pad: 14px; --sp-logo: 76px; }
+  .cs-sponsor-row--2 { --sp-height: 104px; --sp-pad: 12px; --sp-logo: 64px; }
+  .cs-sponsor-row--3 { --sp-height: 94px; --sp-pad: 12px; --sp-logo: 56px; }
+  .cs-sponsor { flex-basis: calc(50% - 5px); }
 }

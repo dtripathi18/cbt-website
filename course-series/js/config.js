@@ -61,7 +61,26 @@ const COURSE_SERIES_CONFIG = {
   days: PROGRAMME_DATA.days,
   speakers: PROGRAMME_DATA.speakers,
 
-  sponsors: [],
+  // Sponsor logos, one array per row on the Sponsors tab. Rows shrink in
+  // size from first to last. `tall: true` lets a portrait logo fill its box.
+  sponsors: [
+    [
+      { name: "Cytiva", logo: "assets/images/sponsors/cytiva.png", url: "https://www.cytivalifesciences.com/en/in" },
+      { name: "Merck", logo: "assets/images/sponsors/merck.png", url: "https://www.merckgroup.com/en" },
+      { name: "ACS BIOT", logo: "assets/images/sponsors/acs_biot.jpg", url: "https://acsbiot.org/" },
+    ],
+    [
+      { name: "Indian Pharmacopoeia Commission", logo: "assets/images/sponsors/ipc.png", url: "https://www.ipc.gov.in/", tall: true },
+      { name: "Sartorius", logo: "assets/images/sponsors/sartorius.png", url: "https://www.sartorius.com/en" },
+      { name: "TCS", logo: "assets/images/sponsors/tcs.png", url: "https://www.tcs.com/" },
+      { name: "OmniBRx", logo: "assets/images/sponsors/omnibrx.png", url: "https://www.omnibrx.com/" },
+    ],
+    [
+      { name: "Thermo Fisher Scientific", logo: "assets/images/sponsors/thermofisher.png", url: "https://www.thermofisher.com/in/en/home.html" },
+      { name: "Biocon", logo: "assets/images/sponsors/biocon.png", url: "https://www.biocon.com/" },
+      { name: "HiMedia", logo: "assets/images/sponsors/himedia.png", url: "https://www.himedialabs.com/in/" },
+    ],
+  ],
 
   // From the fee table on the "Grid" sheet of reference/cbt_event.xlsx.
   // Already inclusive of 18% GST. Priced per how many modules (1-3) are
