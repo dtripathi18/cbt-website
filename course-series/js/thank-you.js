@@ -7,4 +7,5 @@
   document.getElementById("thankYouMessage").innerHTML = cfg.thankYou.message.join("<br />");
   document.getElementById("thankYouNote").innerHTML =
     `${cfg.thankYou.noteBeforeEmail} <a href="mailto:${cfg.postPaymentEmail}">${cfg.postPaymentEmail}</a>`;
+  document.getElementById("thankYouCollection").textContent = cfg.thankYou.collectionNote;
 })();

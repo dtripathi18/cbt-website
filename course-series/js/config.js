@@ -154,6 +154,8 @@ const COURSE_SERIES_CONFIG = {
     ],
     // postPaymentEmail (above) is reused here rather than duplicated.
     noteBeforeEmail: "If you don't get a copy of your responses (acknowledgement) mail within 24-48 hours, please drop a mail on",
+    // Shown below the email note.
+    collectionNote: "You can collect your ID card and course kits from 8 am onwards at the Registration kiosk on your module day",
   },
 
   // Apps Script Web App (course-series/apps-script/Code.gs), deployed and

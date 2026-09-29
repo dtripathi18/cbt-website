@@ -324,6 +324,7 @@ a { color: var(--cs-accent-dark); }
   overflow: hidden;
 }
 .cs-day:first-of-type { margin-top: 2px; }
+.cs-day + .cs-day-hint { margin-top: 28px; }
 .cs-day-heading {
   display: flex;
   align-items: center;
@@ -532,6 +533,7 @@ a { color: var(--cs-accent-dark); }
   margin-bottom: 28px;
 }
 .cs-thankyou-note a { color: var(--cs-success); font-weight: 700; }
+#thankYouNote { margin-bottom: 12px; }
 
 /* ---------- About page ---------- */
 .cs-about-hero { padding: 12px 0 8px; max-width: 760px; }

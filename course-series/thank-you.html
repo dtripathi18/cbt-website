@@ -4,6 +4,19 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Registration Received — CBT Course Series</title>
+<script>
+  // Only reachable after a successful submit on register.html (which sets
+  // this flag). Runs in <head> so the page never flashes before redirecting.
+  // If storage is unavailable, let the visitor through rather than bounce a
+  // real registrant back to the form.
+  (function () {
+    try {
+      if (sessionStorage.getItem("csRegistrationSubmitted") !== "1") {
+        location.replace("register.html");
+      }
+    } catch (e) {}
+  })();
+</script>
 <meta name="description" content="Your CBT Course Series 2026 registration has been received." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -36,6 +49,7 @@
       <div class="cs-thankyou-icon">✓</div>
       <p class="cs-thankyou-message" id="thankYouMessage"></p>
       <p class="cs-thankyou-note" id="thankYouNote"></p>
+      <p class="cs-thankyou-note" id="thankYouCollection"></p>
       <a class="cs-btn-primary" href="index.html">← Back to About the Event</a>
     </section>
   </div>
@@ -48,8 +62,8 @@
 </footer>
 
 <script src="js/programme-data.js?v=20260928133631"></script>
-<script src="js/config.js?v=2026-09-29"></script>
+<script src="js/config.js?v=2026-09-29b"></script>
 <script src="js/shared.js?v=2026-09-23"></script>
-<script src="js/thank-you.js"></script>
+<script src="js/thank-you.js?v=2026-09-29"></script>
 </body>
 </html>

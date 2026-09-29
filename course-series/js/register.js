@@ -97,6 +97,10 @@
   const moduleCheckboxes = []; // { checkbox, code, title, dayIndex, isNone }
 
   cfg.days.forEach((day, dayIndex) => {
+    daysSection.appendChild(
+      el("p", "cs-hint cs-day-hint", `<strong>Select one module only or "None" if you're not attending any</strong>`)
+    );
+
     const dayBlock = el("div", "cs-day");
     const heading = el("h3", "cs-day-heading", `${day.label} — ${day.date}`);
     dayBlock.appendChild(heading);
@@ -334,6 +338,9 @@
     }
 
     window.removeEventListener("beforeunload", warnBeforeUnload);
+    // Unlocks thank-you.html for this tab — it redirects back here without
+    // this flag, so it can't be reached by typing the URL directly.
+    try { sessionStorage.setItem("csRegistrationSubmitted", "1"); } catch (storageErr) {}
     window.location.href = "thank-you.html";
   });
 })();
