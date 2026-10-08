@@ -659,7 +659,11 @@ a { color: var(--cs-accent-dark); }
   padding: 22px 24px 24px;
 }
 #aboutFeeTable th:not(:first-child),
-#aboutFeeTable td:not(:first-child) { text-align: center; }
+#aboutFeeTable td:not(:first-child),
+#aboutAccommodationTable th:not(:first-child),
+#aboutAccommodationTable td:not(:first-child) { text-align: center; }
+.cs-tab-card + .cs-tab-card { margin-top: 24px; }
+.cs-tab-subhead { margin: 0 0 14px; font-size: 1.1rem; }
 .cs-tab-card .cs-early-bird { margin-top: 12px; }
 
 /* ---------- About page: curriculum accordions ---------- */

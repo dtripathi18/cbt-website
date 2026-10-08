@@ -109,15 +109,16 @@ const COURSE_SERIES_CONFIG = {
 
   // Matches the live form's real rates (these ARE real — the form itself
   // listed these accommodation tiers). Accommodation is priced separately
-  // and added on top of the module fee tier above; excl. GST per the form.
+  // and added on top of the module fee tier above; inclusive of GST.
   accommodation: [
     { label: "No accommodation needed", price: 0 },
-    { label: "1 day — ₹810", price: 810 },
-    { label: "2 days — ₹1,620", price: 1620 },
-    { label: "3 days — ₹2,430", price: 2430 },
-    { label: "4 days — ₹3,420", price: 3420 },
-    { label: "5 days — ₹4,050", price: 4050 },
+    { label: "1 day — ₹956", price: 956 },
+    { label: "2 days — ₹1,912", price: 1912 },
+    { label: "3 days — ₹2,877", price: 2877 },
+    { label: "4 days — ₹3,823", price: 3823 },
+    { label: "5 days — ₹4,779", price: 4779 },
   ],
+  accommodationNote: "Charges are inclusive of 18% GST",
 
   // The live form's "Current position" options. This is descriptive only —
   // which fee column applies (academia/industry) now comes from the

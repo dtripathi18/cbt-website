@@ -116,6 +116,22 @@
   document.getElementById("aboutFeeTable").innerHTML = renderFeeTableHTML(cfg);
   document.getElementById("aboutFeeNote").textContent = cfg.feeNote;
   document.getElementById("aboutFeeWarning").textContent = cfg.feeWarning;
+
+  // ---- Hostel accommodation (same tiers as the register page dropdown) ----
+  const stayTiers = cfg.accommodation.filter((tier) => tier.price > 0);
+  document.getElementById("aboutAccommodationTable").innerHTML = `
+    <thead>
+      <tr><th>Duration</th><th>IIT Hostel</th></tr>
+    </thead>
+    <tbody>
+      ${stayTiers.map((tier, i) => `
+        <tr>
+          <td>${i + 1} ${i === 0 ? "day" : "days"}</td>
+          <td>${formatINR(tier.price)}</td>
+        </tr>
+      `).join("")}
+    </tbody>`;
+  document.getElementById("aboutAccommodationNote").textContent = cfg.accommodationNote;
   const earlyBirdNote = document.getElementById("aboutEarlyBird");
   if (earlyBirdOpen) {
     earlyBirdNote.textContent = cfg.earlyBird.summary;

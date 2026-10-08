@@ -54,6 +54,7 @@
   document.getElementById("feeTable").innerHTML = renderFeeTableHTML(cfg);
   document.getElementById("feeNote").textContent = cfg.feeNote;
   document.getElementById("feeWarning").textContent = cfg.feeWarning;
+  document.getElementById("accommodationWarning").textContent = cfg.feeWarning;
 
   // ---- Module details & venue schedule (mirrors the figure on the live
   // Google Form) — a room × day matrix, module titles looked up from `days`
