@@ -16,6 +16,7 @@ const PROGRAMME_DATA = {
             "andreas-castan",
             "ranil-wickramasinghe",
             "james-gomes",
+            "sanjeev-gupta",
             "dhananjay-patankar"
           ]
         },
@@ -24,7 +25,7 @@ const PROGRAMME_DATA = {
           "title": "Analytical Characterization of Biosimilars",
           "venue": "LHC 410",
           "speakers": [
-            "hiten-gutka",
+            "narendra-chirmule",
             "sumit-singh",
             "todd-przybycien",
             "andrew-maier",
@@ -68,9 +69,9 @@ const PROGRAMME_DATA = {
           "venue": "LHC 422",
           "speakers": [
             "andrew-maier",
+            "om-prakash",
             "manojkumar-ramteke",
-            "hariprasad-kodamana",
-            "om-prakash"
+            "hariprasad-kodamana"
           ]
         }
       ]
@@ -85,11 +86,11 @@ const PROGRAMME_DATA = {
           "venue": "LHC 408",
           "speakers": [
             "ek-lee",
-            "mark-schofield",
+            "subhasis-banerjee",
             "todd-przybycien",
             "ranil-wickramasinghe",
             "andrew-maier",
-            "brajnandan-thakur"
+            "partha-banerjee"
           ]
         },
         {
@@ -116,10 +117,10 @@ const PROGRAMME_DATA = {
           "title": "Regulatory Framework for Lifecycle Management of Products",
           "venue": "LHC 418",
           "speakers": [
-            "priya-kulkarni",
+            "narendra-chirmule",
             "ravindra-khare",
-            "dhananjay-patankar",
-            "narendra-chirmule"
+            "priya-kulkarni",
+            "dhananjay-patankar"
           ]
         },
         {
@@ -213,13 +214,6 @@ const PROGRAMME_DATA = {
       "id": "arvind-kukrety",
       "name": "Arvind Kukrety",
       "affiliation": "CDSCO",
-      "image": "",
-      "description": ""
-    },
-    {
-      "id": "brajnandan-thakur",
-      "name": "Brajnandan Thakur",
-      "affiliation": "Merck",
       "image": "",
       "description": ""
     },
@@ -352,7 +346,7 @@ const PROGRAMME_DATA = {
     {
       "id": "sanjay-shah",
       "name": "Sanjay Shah",
-      "affiliation": "Xenpharma",
+      "affiliation": "Xenpharm",
       "image": "",
       "description": ""
     },
@@ -402,6 +396,27 @@ const PROGRAMME_DATA = {
       "id": "vinesh-yezhuvath",
       "name": "Vinesh B. Yezhuvath",
       "affiliation": "TCS",
+      "image": "",
+      "description": ""
+    },
+    {
+      "id": "partha-banerjee",
+      "name": "Partha Banerjee",
+      "affiliation": "Merck",
+      "image": "",
+      "description": ""
+    },
+    {
+      "id": "sanjeev-gupta",
+      "name": "Sanjeev Gupta",
+      "affiliation": "Ipca Laboratories Ltd.",
+      "image": "",
+      "description": ""
+    },
+    {
+      "id": "subhasis-banerjee",
+      "name": "Subhasis Banerjee",
+      "affiliation": "Merck",
       "image": "",
       "description": ""
     }
