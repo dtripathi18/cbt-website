@@ -142,6 +142,14 @@ a { color: var(--cs-accent-dark); }
   font-size: 0.97rem;
 }
 
+.cs-query-note {
+  margin: 28px 0;
+  color: var(--cs-ink);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.cs-query-note a { color: var(--cs-accent); text-decoration: underline; }
+
 /* ---------- Stepped timeline ---------- */
 .cs-form { display: flex; flex-direction: column; gap: 44px; }
 .cs-section {
