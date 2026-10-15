@@ -1,6 +1,6 @@
 /**
  * Config for the CBT Course Series registration microsite.
- * Deliberately standalone — this folder shares nothing with the main
+ * Deliberately standalone - this folder shares nothing with the main
  * site's /js or /css, so it can be lifted out to its own repo/hosting
  * later with no untangling.
  */
@@ -56,7 +56,7 @@ const COURSE_SERIES_CONFIG = {
 
   // Days, modules (title, venue, speakers) and speaker details live in
   // js/programme-data.js, which the admin tool (admin-tool/) rewrites.
-  // Modules have no individual price — the fee structure (`feeTiers`, below)
+  // Modules have no individual price - the fee structure (`feeTiers`, below)
   // prices by how many modules are picked in total, not which ones.
   days: PROGRAMME_DATA.days,
   speakers: PROGRAMME_DATA.speakers,
@@ -107,20 +107,20 @@ const COURSE_SERIES_CONFIG = {
   roomScheduleTime: "8:30am - 6:30pm",
   roomSchedule: buildRoomSchedule(PROGRAMME_DATA.days),
 
-  // Matches the live form's real rates (these ARE real — the form itself
+  // Matches the live form's real rates (these ARE real - the form itself
   // listed these accommodation tiers). Accommodation is priced separately
   // and added on top of the module fee tier above; inclusive of GST.
   accommodation: [
     { label: "No accommodation needed", price: 0 },
-    { label: "1 day — ₹956", price: 956 },
-    { label: "2 days — ₹1,912", price: 1912 },
-    { label: "3 days — ₹2,877", price: 2877 },
-    { label: "4 days — ₹3,823", price: 3823 },
-    { label: "5 days — ₹4,779", price: 4779 },
+    { label: "1 day - ₹956", price: 956 },
+    { label: "2 days - ₹1,912", price: 1912 },
+    { label: "3 days - ₹2,877", price: 2877 },
+    { label: "4 days - ₹3,823", price: 3823 },
+    { label: "5 days - ₹4,779", price: 4779 },
   ],
   accommodationNote: "Charges are inclusive of 18% GST",
 
-  // The live form's "Current position" options. This is descriptive only —
+  // The live form's "Current position" options. This is descriptive only -
   // which fee column applies (academia/industry) now comes from the
   // separate "Affiliation" academia/industry field, not from this.
   positions: [

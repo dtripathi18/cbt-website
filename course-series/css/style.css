@@ -1,7 +1,7 @@
-/* CBT Course Series microsite — stepped timeline design system.
+/* CBT Course Series microsite - stepped timeline design system.
    The form reads as a numbered journey down a vertical rail: white page,
    soft blue panels per step, white elements nested inside them.
-   Self-contained — nothing here is shared with ../css. */
+   Self-contained - nothing here is shared with ../css. */
 
 :root {
   --cs-page: #ffffff;
@@ -278,7 +278,7 @@ a { color: var(--cs-accent-dark); }
   color: var(--cs-accent-dark);
   cursor: pointer;
 }
-/* Registration fee readout — a div rather than a readonly input so the
+/* Registration fee readout - a div rather than a readonly input so the
    pre-discount amount can be struck through beside the final one. */
 .cs-fee-display {
   display: flex;
@@ -367,7 +367,11 @@ a { color: var(--cs-accent-dark); }
   border-color: var(--cs-accent);
   background: var(--cs-accent-soft);
 }
-.cs-module-input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.cs-module--locked { cursor: not-allowed; }
+.cs-module--locked:hover { border-color: var(--cs-line); background: var(--cs-paper); }
+.cs-module--locked:not(:has(input:checked)) { opacity: 0.45; }
+.cs-module--locked:has(input:checked) { border-color: var(--cs-accent); background: var(--cs-accent-soft); }
+.cs-day-lock-note { margin: 10px 16px 0; }.cs-module-input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 .cs-module-check {
   flex: 0 0 auto;
   width: 19px;

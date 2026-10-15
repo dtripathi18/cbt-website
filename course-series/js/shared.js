@@ -1,4 +1,4 @@
-// Small DOM helper — a local copy of the same pattern the main site's
+// Small DOM helper - a local copy of the same pattern the main site's
 // js/shared.js uses, kept separate on purpose (no cross-folder import).
 function el(tag, className, html) {
   const node = document.createElement(tag);
@@ -11,7 +11,7 @@ function formatINR(n) {
   return "₹" + n.toLocaleString("en-IN");
 }
 
-// Mobile nav hamburger toggle — same header markup on every page in this
+// Mobile nav hamburger toggle - same header markup on every page in this
 // microsite, so this is wired up once and called from each page's script.
 function initCsNavToggle() {
   const toggle = document.getElementById("csNavToggle");
@@ -23,7 +23,7 @@ function initCsNavToggle() {
   });
 }
 
-// Points the header/footer "CBT main site" links at cfg.site.mainSiteUrl —
+// Points the header/footer "CBT main site" links at cfg.site.mainSiteUrl -
 // same header/footer markup on every page in this microsite. Hidden
 // entirely while that's unset (this site is now fully standalone; no
 // confirmed "official" main-site URL to link back to yet).
@@ -40,7 +40,7 @@ function initMainSiteLinks(cfg) {
   if (footerLink) footerLink.href = cfg.site.mainSiteUrl;
 }
 
-// Fee tier table markup — shared by the register page and the about page so
+// Fee tier table markup - shared by the register page and the about page so
 // the two never drift out of sync.
 function renderFeeTableHTML(cfg) {
   const tierLabels = { 1: "Choose any one", 2: "Choose any two", 3: "Choose any three" };

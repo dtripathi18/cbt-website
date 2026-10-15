@@ -57,7 +57,7 @@
   document.getElementById("accommodationWarning").textContent = cfg.feeWarning;
 
   // ---- Module details & venue schedule (mirrors the figure on the live
-  // Google Form) — a room × day matrix, module titles looked up from `days`
+  // Google Form) - a room × day matrix, module titles looked up from `days`
   // above so they're not duplicated in two places. ----
   const moduleTitleByCode = {};
   cfg.days.forEach((day) => day.modules.forEach((m) => { moduleTitleByCode[m.code] = m.title; }));
@@ -73,13 +73,13 @@
           <td>${row.room}</td>
           ${row.cells.map((code) => code
             ? `<td><span class="cs-schedule-code">${code}</span> ${moduleTitleByCode[code] || ""}</td>`
-            : `<td>—</td>`
+            : `<td>-</td>`
           ).join("")}
         </tr>
       `).join("")}
     </tbody>`;
   document.getElementById("scheduleNote").innerHTML =
-    `<strong>Timing: ${cfg.roomScheduleTime} each day. Modules run in parallel across rooms — you can attend only one module per day (see "Choose Your Modules" below for full titles).</strong>`;
+    `<strong>Timing: ${cfg.roomScheduleTime} each day. Modules run in parallel across rooms - you can attend only one module per day (see "Choose Your Modules" below for full titles).</strong>`;
 
   // ---- Position dropdown (descriptive only, doesn't affect pricing) ----
   const positionSelect = document.getElementById("fPosition");
@@ -89,7 +89,7 @@
     positionSelect.appendChild(opt);
   });
 
-  // ---- Affiliation type (academia/industry) — this drives pricing ----
+  // ---- Affiliation type (academia/industry) - this drives pricing ----
   const affiliationTypeSelect = document.getElementById("fAffiliationType");
   affiliationTypeSelect.addEventListener("change", recalculate);
 
@@ -97,14 +97,21 @@
   const daysSection = document.getElementById("daysSection");
   const moduleCheckboxes = []; // { checkbox, code, title, dayIndex, isNone }
 
+  // Part I / Part II modules must be taken together (see syncPartPairs below).
+  const PART_PAIRS = [["M5", "M6"], ["M8", "M9"]];
+
   cfg.days.forEach((day, dayIndex) => {
     daysSection.appendChild(
       el("p", "cs-hint cs-day-hint", `<strong>Select one module only or "None" if you're not attending any</strong>`)
     );
 
     const dayBlock = el("div", "cs-day");
-    const heading = el("h3", "cs-day-heading", `${day.label} — ${day.date}`);
+    const heading = el("h3", "cs-day-heading", `${day.label} - ${day.date}`);
     dayBlock.appendChild(heading);
+    // Shown on every day that holds a Part I or Part II module (Day 2 and Day 3).
+    if (day.modules.some((m) => PART_PAIRS.flat().includes(m.code))) {
+      dayBlock.appendChild(el("p", "cs-hint cs-day-lock-note", `<span class="cs-req">*</span><strong>Note: M5-M6 and M8-M9 are paired modules and will be selected together automatically.</strong> <br> <i> Eg. (Selecting M5 will automatically select M6 and selecting M8 will automatically select M9, and vice versa.)</i>`));
+    }
 
     const list = el("div", "cs-module-list");
 
@@ -125,13 +132,13 @@
       moduleCheckboxes.push({ checkbox, code: mod.code, title: mod.title, dayIndex, isNone: false });
     });
 
-    // "None" option — mutually exclusive with the real modules for this day.
+    // "None" option - mutually exclusive with the real modules for this day.
     const noneRow = el(
       "label",
       "cs-module cs-module--none",
       `<input type="checkbox" class="cs-module-input" id="none-day-${dayIndex}" />
        <span class="cs-module-check"></span>
-       <span class="cs-module-text"><span class="cs-module-title">None — not attending this day</span></span>`
+       <span class="cs-module-text"><span class="cs-module-title">None - not attending this day</span></span>`
     );
     const noneCheckbox = noneRow.querySelector("input");
     list.appendChild(noneRow);
@@ -141,16 +148,51 @@
     daysSection.appendChild(dayBlock);
   });
 
-  // One module (or "None") per day — styled as cards/checkboxes rather than
+  // One module (or "None") per day - styled as cards/checkboxes rather than
   // native radio buttons, but single-select is enforced here: checking one
   // entry for a day clears every other entry in that same day.
+  // Part I / Part II modules must be taken together: picking either one
+  // selects its partner and locks the rest of the Part II day. Unchecking
+  // (or replacing) one half of a pair also clears the other half.
+  const findEntry = (code) => moduleCheckboxes.find((m) => m.code === code);
+
+  // Selects `entry` and clears every other option on its day.
+  function pickExclusively(entry) {
+    moduleCheckboxes
+      .filter((m) => m.dayIndex === entry.dayIndex && m !== entry)
+      .forEach((m) => { m.checkbox.checked = false; });
+    entry.checkbox.checked = true;
+  }
+
+  function syncPartPairs(changed) {
+    const pair = changed.checkbox.checked && PART_PAIRS.find((p) => p.includes(changed.code));
+    if (pair) pair.forEach((code) => pickExclusively(findEntry(code)));
+
+    // A pair with only one half left (partner was replaced/unchecked) is dissolved.
+    PART_PAIRS.forEach(([a, b]) => {
+      const ea = findEntry(a), eb = findEntry(b);
+      if (ea.checkbox.checked !== eb.checkbox.checked) {
+        ea.checkbox.checked = false;
+        eb.checkbox.checked = false;
+      }
+    });
+
+    // Lock the whole Part II day while its pair is active (Part II itself included,
+    // so the pair can only be undone from the Part I day).
+    const lockedDays = new Set(
+      PART_PAIRS.filter(([a]) => findEntry(a).checkbox.checked).map(([, b]) => findEntry(b).dayIndex)
+    );
+    moduleCheckboxes.forEach((m) => {
+      const locked = lockedDays.has(m.dayIndex);
+      m.checkbox.disabled = locked;
+      m.checkbox.closest(".cs-module").classList.toggle("cs-module--locked", locked);
+    });
+  }
+
   moduleCheckboxes.forEach((entry) => {
     entry.checkbox.addEventListener("change", () => {
-      if (entry.checkbox.checked) {
-        moduleCheckboxes
-          .filter((m) => m.dayIndex === entry.dayIndex && m !== entry)
-          .forEach((m) => { m.checkbox.checked = false; });
-      }
+      if (entry.checkbox.checked) pickExclusively(entry);
+      syncPartPairs(entry);
       recalculate();
     });
   });
@@ -191,7 +233,7 @@
     registrationFee = formatINR(total);
     feeFinal.textContent = registrationFee;
 
-    // Strike through the pre-discount total beside the final one — only
+    // Strike through the pre-discount total beside the final one - only
     // when there's actually something discounted (not ₹0 → ₹0).
     feeOriginal.hidden = discountedModuleFee === moduleFee;
     feeOriginal.textContent = formatINR(moduleFee + accommodationTier.price);
@@ -202,7 +244,7 @@
 
   recalculate();
 
-  // Reads a File as base64 (no "data:...;base64," prefix) — Apps Script Web
+  // Reads a File as base64 (no "data:...;base64," prefix) - Apps Script Web
   // Apps can't parse multipart file uploads, so the screenshot travels as a
   // base64 string inside the JSON payload and gets decoded back into a file
   // server-side.
@@ -231,7 +273,7 @@
       return;
     }
 
-    // Every day needs an explicit choice — a module or "None" — rather than
+    // Every day needs an explicit choice - a module or "None" - rather than
     // silently treating an untouched day as "not attending".
     const unselectedDays = cfg.days.filter(
       (day, i) => !moduleCheckboxes.some((m) => m.dayIndex === i && m.checkbox.checked)
@@ -239,14 +281,14 @@
     if (unselectedDays.length > 0) {
       submitNote.hidden = false;
       submitNote.className = "cs-submit-note cs-submit-note--error";
-      submitNote.textContent = `Please make a selection for ${unselectedDays.map((d) => d.label).join(", ")} — pick a module, or mark "None" if you're not attending.`;
+      submitNote.textContent = `Please make a selection for ${unselectedDays.map((d) => d.label).join(", ")} - pick a module, or mark "None" if you're not attending.`;
       return;
     }
 
     if (!cfg.submitEndpointUrl) {
       submitNote.hidden = false;
       submitNote.className = "cs-submit-note cs-submit-note--pending";
-      submitNote.textContent = "Registration collection isn't connected yet — check back soon.";
+      submitNote.textContent = "Registration collection isn't connected yet - check back soon.";
       return;
     }
 
@@ -257,7 +299,7 @@
     submitNote.className = "cs-submit-note cs-submit-note--pending";
     submitNote.textContent = "Submitting…";
 
-    // Warn against closing/refreshing mid-submit — Apps Script may have
+    // Warn against closing/refreshing mid-submit - Apps Script may have
     // already saved the registration server-side by the time the request
     // is in flight, so leaving early risks an accidental duplicate
     // submission on retry rather than actually cancelling anything.
@@ -297,7 +339,7 @@
         screenshotMimeType: screenshotFile ? screenshotFile.type : "",
       };
     } catch (err) {
-      // A real, pre-send failure (e.g. the screenshot couldn't be read) —
+      // A real, pre-send failure (e.g. the screenshot couldn't be read) -
       // nothing was sent, so it's correct to stay here and let them retry.
       window.removeEventListener("beforeunload", warnBeforeUnload);
       submitNote.className = "cs-submit-note cs-submit-note--error";
@@ -309,10 +351,10 @@
     }
 
     try {
-      // A hard cap on how long "Submitting…" can hang for — Apps Script Web
+      // A hard cap on how long "Submitting…" can hang for - Apps Script Web
       // Apps have no fixed response time, and without this a truly stalled
       // connection could sit here for minutes with no feedback. Past this
-      // point we give up waiting (not up on the submission itself — see the
+      // point we give up waiting (not up on the submission itself - see the
       // catch below) rather than leave the user stuck.
       const timeoutController = new AbortController();
       const timeoutId = setTimeout(() => timeoutController.abort(), 25000);
@@ -328,8 +370,8 @@
         clearTimeout(timeoutId);
       }
     } catch (networkErr) {
-      // Apps Script Web Apps execute doPost() — and already write the Sheet
-      // row / send the email — on the initial POST, then 302-redirect to a
+      // Apps Script Web Apps execute doPost() - and already write the Sheet
+      // row / send the email - on the initial POST, then 302-redirect to a
       // separate domain purely to deliver the response back to the browser.
       // On a slow/flaky connection (or our own 25s timeout above) that
       // second hop can fail even though the registration was already
@@ -339,7 +381,7 @@
     }
 
     window.removeEventListener("beforeunload", warnBeforeUnload);
-    // Unlocks thank-you.html for this tab — it redirects back here without
+    // Unlocks thank-you.html for this tab - it redirects back here without
     // this flag, so it can't be reached by typing the URL directly.
     try { sessionStorage.setItem("csRegistrationSubmitted", "1"); } catch (storageErr) {}
     window.location.href = "thank-you.html";
