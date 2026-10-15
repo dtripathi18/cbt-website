@@ -1,6 +1,3 @@
 .DS_Store
 course-series/reference/*
-admin-tool/node_modules/
-admin-tool/staged/
-admin-tool/backups/
-admin-tool/.env
+admin-tool/*
