@@ -70,6 +70,7 @@ const COURSE_SERIES_CONFIG = {
       { name: "Merck", logo: "assets/images/sponsors/merck.png", url: "https://www.merckgroup.com/en" },
     ],
     [
+      { name: "Amgen", logo: "assets/images/sponsors/amgen.png", url: "https://www.amgen.com/" },
       { name: "Indian Pharmacopoeia Commission", logo: "assets/images/sponsors/ipc.png", url: "https://www.ipc.gov.in/", tall: true },
       { name: "Sartorius", logo: "assets/images/sponsors/sartorius.png", url: "https://www.sartorius.com/en" },
       { name: "TCS", logo: "assets/images/sponsors/tcs.png", url: "https://www.tcs.com/" },
