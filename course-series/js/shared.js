@@ -40,6 +40,27 @@ function initMainSiteLinks(cfg) {
   if (footerLink) footerLink.href = cfg.site.mainSiteUrl;
 }
 
+// Early bird window / discount - shared so the fee tables and the register
+// page's live total always agree. Checked at call time (not once at load) so
+// a page left open past the cutoff stops applying the discount.
+function isEarlyBirdActive(cfg) {
+  return Date.now() < new Date(cfg.earlyBird.endsAt).getTime();
+}
+
+function applyEarlyBird(cfg, moduleFee) {
+  return isEarlyBirdActive(cfg)
+    ? Math.round(moduleFee * (1 - cfg.earlyBird.discountPercent / 100))
+    : moduleFee;
+}
+
+// One fee cell: the struck-through original beside the discounted fee while
+// the early bird offer is open, otherwise just the plain fee.
+function renderFeeCellHTML(cfg, fee) {
+  const discounted = applyEarlyBird(cfg, fee);
+  if (discounted === fee) return formatINR(fee);
+  return `<s class="cs-fee-original">${formatINR(fee)}</s> <span class="cs-fee-final">${formatINR(discounted)}</span>`;
+}
+
 // Fee tier table markup - shared by the register page and the about page so
 // the two never drift out of sync.
 function renderFeeTableHTML(cfg) {
@@ -53,8 +74,8 @@ function renderFeeTableHTML(cfg) {
       ${[1, 2, 3].map((n) => `
         <tr>
           <td>M1-M${moduleCount} (${tierLabels[n]})</td>
-          <td>${formatINR(cfg.feeTiers.academia[n])}</td>
-          <td>${formatINR(cfg.feeTiers.industry[n])}</td>
+          <td>${renderFeeCellHTML(cfg, cfg.feeTiers.academia[n])}</td>
+          <td>${renderFeeCellHTML(cfg, cfg.feeTiers.industry[n])}</td>
         </tr>
       `).join("")}
     </tbody>`;

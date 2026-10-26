@@ -419,6 +419,9 @@ a { color: var(--cs-accent-dark); }
 .cs-fee-table tbody td:not(:first-child) { font-weight: 700; }
 #feeTable th:not(:first-child),
 #feeTable td:not(:first-child) { text-align: center; }
+/* Early bird: struck-through original beside the discounted fee. */
+.cs-fee-table .cs-fee-original { margin-right: 6px; font-size: 0.9rem; }
+.cs-fee-table .cs-fee-final { font-size: inherit; }
 
 #scheduleTable th,
 #scheduleTable td { white-space: normal; font-size: 0.8rem; line-height: 1.4; padding: 9px 12px; min-width: 130px; }

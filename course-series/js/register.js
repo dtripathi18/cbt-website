@@ -213,22 +213,14 @@
   let registrationFee = formatINR(0);
   const earlyBirdNote = document.getElementById("earlyBirdNote");
 
-  // Checked on every recalculation (not once at load) so a page left open
-  // past the cutoff stops applying the discount.
-  function earlyBirdActive() {
-    return Date.now() < new Date(cfg.earlyBird.endsAt).getTime();
-  }
-
   function recalculate() {
     const selectedCount = moduleCheckboxes.filter((m) => !m.isNone && m.checkbox.checked).length;
     const accommodationTier = cfg.accommodation[Number(accommodationSelect.value)] || cfg.accommodation[0];
     const category = affiliationTypeSelect.value; // "academia" | "industry" | "" (not selected yet)
 
     const moduleFee = selectedCount > 0 && category ? (cfg.feeTiers[category][selectedCount] || 0) : 0;
-    const earlyBird = earlyBirdActive();
-    const discountedModuleFee = earlyBird
-      ? Math.round(moduleFee * (1 - cfg.earlyBird.discountPercent / 100))
-      : moduleFee;
+    const earlyBird = isEarlyBirdActive(cfg); // re-checked on every recalculation
+    const discountedModuleFee = applyEarlyBird(cfg, moduleFee);
     const total = discountedModuleFee + accommodationTier.price;
     registrationFee = formatINR(total);
     feeFinal.textContent = registrationFee;
