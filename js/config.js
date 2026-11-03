@@ -39,9 +39,9 @@ const CBT_CONFIG = {
     ctaLabel: "Register Now",
     // Separate static site (source: this repo's course-series/ folder),
     // deployed to the /course-series folder on the same server.
-    registrationUrl: "https://cbt.iitd.ac.in/course-series/register.html",
+    registrationUrl: "course-series/register.html",
     aboutLabel: "About the Event",
-    aboutUrl: "https://cbt.iitd.ac.in/course-series/",
+    aboutUrl: "course-series/index.html",
   },
 
   contactCta: {
@@ -243,7 +243,7 @@ const CBT_CONFIG = {
     {
       year: "2021",
       items: [
-        { title: "CBT Training Event 2021", image: "assets/images/news-events/cbt12.jpg", url: "https://cbt.iitd.ac.in/uploads/CBT%20Training%20Event%202021.pdf" },
+        { title: "CBT Training Event 2021", image: "assets/images/news-events/cbt12.jpg", url: "uploads/CBT%20Training%20Event%202021.pdf" },
         { title: "CBT Course Series Brochure 2021", image: "assets/images/news-events/cbt12.jpg", url: "assets/pdfs/cbt-course-series-brochure-2021.pdf" },
         { title: "Vaibhav Summit 2021 (Oct)", image: "assets/images/news-events/cbt13.jpg", url: "assets/pdfs/vaibhav-summit-2021-oct.pdf" },
       ],
@@ -264,7 +264,7 @@ const CBT_CONFIG = {
     {
       year: "2018",
       items: [
-        { title: "DBT COE-CBT Brochure 2018", image: "assets/images/news-events/dbt-coe-cbt-brochure.jpg", url: "https://cbt.iitd.ac.in/uploads/courses/DBT%20COE-CBT%20Brochure.pdf" },
+        { title: "DBT COE-CBT Brochure 2018", image: "assets/images/news-events/dbt-coe-cbt-brochure.jpg", url: "uploads/courses/DBT%20COE-CBT%20Brochure.pdf" },
         { title: "CBT Brochure 2018", url: "assets/pdfs/cbt-brochure-2018.pdf" },
         { title: "GIAN Course Brochure: Analytical Systems Biology and Characterization of Biotherapeutics (11–14 December 2018)", image: "assets/images/news-events/cbt5.jpg", url: "assets/pdfs/gian-brochure-analytical-2018.pdf" },
         { title: "CBT Flyer 2018", image: "assets/images/news-events/cbt6.jpg", url: "assets/pdfs/cbt-flyer-2018.pdf" },

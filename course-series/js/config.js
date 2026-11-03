@@ -10,7 +10,7 @@ const COURSE_SERIES_CONFIG = {
     wordmark: "CBT / 2026",
     // The header/footer "CBT main site" links point here; they hide
     // themselves if this is left empty (see initMainSiteLinks in shared.js).
-    mainSiteUrl: "https://cbt.iitd.ac.in/",
+    mainSiteUrl: "../index.html",
   },
 
   event: {
