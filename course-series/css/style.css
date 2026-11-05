@@ -698,6 +698,7 @@ a { color: var(--cs-accent-dark); }
 }
 .cs-cday-label { color: var(--cs-ink); }
 .cs-cday-date { color: var(--cs-ink-soft); font-size: 0.92rem; font-weight: 500; }
+.cs-cday-note { margin: 0 4px 14px; font-size: 0.92rem; }
 
 /* Each accordion spans two shared rows of the day grid (header, then
    speaker list) via subgrid, so every header in a row is exactly as tall as

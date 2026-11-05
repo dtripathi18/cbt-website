@@ -64,12 +64,18 @@
   const chevronSVG ='<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const pinSVG ='<svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path d="M10 18s6-5.2 6-10a6 6 0 10-12 0c0 4.8 6 10 6 10z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="10" cy="8" r="2.2" fill="currentColor"/></svg>';
 
+  // Part I / Part II modules are registered together (mirrors PART_PAIRS in register.js).
+  const PART_PAIRS = [["M5", "M6"], ["M8", "M9"]];
+
   const curriculumDays = document.getElementById("curriculumDays");
   cfg.days.forEach((day) => {
     const dayBlock = el("div", "cs-cday");
     dayBlock.appendChild(
       el("h3", "cs-cday-heading", `<span class="cs-cday-label">${day.label}</span><span class="cs-cday-date">${day.date}</span>`)
     );
+    if (day.modules.some((m) => PART_PAIRS.flat().includes(m.code))) {
+      dayBlock.appendChild(el("p", "cs-hint cs-cday-note", `<span class="cs-req">*</span><strong>Note: M5-M6 and M8-M9 are paired modules and will be selected together automatically.</strong> <br> <i> Eg. (Selecting M5 will automatically select M6 and selecting M8 will automatically select M9, and vice versa.)</i>`));
+    }
 
     const grid = el("div", "cs-acc-grid");
     day.modules.forEach((mod) => {
