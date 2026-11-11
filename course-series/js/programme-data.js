@@ -29,7 +29,6 @@ const PROGRAMME_DATA = {
             "m-kalaivani",
             "sumit-singh",
             "todd-przybycien",
-            "andrew-maier",
             "satish-singh",
             "anurag-rathore"
           ]
@@ -60,7 +59,6 @@ const PROGRAMME_DATA = {
           "speakers": [
             "hiten-gutka",
             "narendra-chirmule",
-            "andrew-maier",
             "sumit-singh"
           ]
         },
@@ -70,11 +68,10 @@ const PROGRAMME_DATA = {
           "venue": "LHC 422",
           "speakers": [
             "venkataramana-runkana",
-            "andrew-maier",
+            "brajnandan-thakur",
             "om-prakash",
             "manojkumar-ramteke",
-            "hariprasad-kodamana",
-            "brajnandan-thakur"
+            "hariprasad-kodamana"
           ]
         }
       ]
@@ -92,7 +89,6 @@ const PROGRAMME_DATA = {
             "subhasis-banerjee",
             "todd-przybycien",
             "ranil-wickramasinghe",
-            "andrew-maier",
             "partha-banerjee"
           ]
         },
@@ -137,8 +133,7 @@ const PROGRAMME_DATA = {
             "anurag-rathore",
             "venkata-buddhiraju",
             "vinesh-yezhuvath",
-            "sai-prasad",
-            "andrew-maier"
+            "sai-prasad"
           ]
         }
       ]
@@ -162,6 +157,7 @@ const PROGRAMME_DATA = {
           "title": "Formulation Science for Biotherapeutics: From QTPP to Patient-Centric Delivery (Part II)",
           "venue": "LHC 410",
           "speakers": [
+            "ankit-kanthe",
             "hiten-gutka",
             "indrajit-ghosh",
             "satish-singh"
@@ -197,13 +193,6 @@ const PROGRAMME_DATA = {
       "id": "andreas-castan",
       "name": "Andreas Castan",
       "affiliation": "Cytiva, Sweden",
-      "image": "",
-      "description": ""
-    },
-    {
-      "id": "andrew-maier",
-      "name": "Andrew Maier",
-      "affiliation": "Genentech",
       "image": "",
       "description": ""
     },
@@ -442,6 +431,13 @@ const PROGRAMME_DATA = {
       "id": "brajnandan-thakur",
       "name": "Brajnandan Thakur",
       "affiliation": "Merck",
+      "image": "",
+      "description": ""
+    },
+    {
+      "id": "ankit-kanthe",
+      "name": "Ankit Kanthe",
+      "affiliation": "Bristol Myers Squibb",
       "image": "",
       "description": ""
     }
