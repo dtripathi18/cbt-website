@@ -11,7 +11,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16.png" />
 <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png" />
-<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/style.css?v=2026-11-12" />
 </head>
 <body>
 
@@ -86,6 +86,10 @@
           <div class="cs-field">
             <label for="fOrganization">Organization <span class="cs-req">*</span></label>
             <input id="fOrganization" name="organization" type="text" required />
+            <label class="cs-iitd-toggle" for="fIitdStudent">
+              <input id="fIitdStudent" name="iitdStudent" type="checkbox" />
+              <span id="iitdStudentLabel"></span>
+            </label>
           </div>
           <div class="cs-field">
             <label for="fPosition">Current position <span class="cs-req">*</span></label>
@@ -115,6 +119,7 @@
           <table class="cs-fee-table" id="feeTable"></table>
         </div>
         <p class="cs-table-note" id="feeNote"></p>
+        <p class="cs-fee-discount-note" id="feeDiscountNote" hidden></p>
         <p class="cs-fee-warning" id="feeWarning"></p>
         </div>
       </section>
@@ -177,8 +182,8 @@
 </main>
 
 <script src="js/programme-data.js?v=20261111123956"></script>
-<script src="js/config.js?v=2026-09-29"></script>
-<script src="js/shared.js?v=2026-09-23"></script>
-<script src="js/register.js?v=2026-09-29b"></script>
+<script src="js/config.js?v=2026-11-12"></script>
+<script src="js/shared.js?v=2026-11-12"></script>
+<script src="js/register.js?v=2026-11-12"></script>
 </body>
 </html>

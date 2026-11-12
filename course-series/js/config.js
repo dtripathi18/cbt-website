@@ -103,6 +103,20 @@ const COURSE_SERIES_CONFIG = {
     summary: "Early bird: Register by 16th November 2026 (IST) to avail 10% discount on module fees",
   },
 
+  // IIT Delhi students (the "IIT Delhi student" option on the register page):
+  // a flat % off the base module fee that, unlike the early bird, never
+  // expires. It replaces the early bird discount rather than stacking with it,
+  // and is priced on the academia tier. Accommodation stays undiscounted.
+  iitdStudent: {
+    label: "I am an IIT Delhi student",
+    organization: "IIT Delhi",
+    discountPercent: 30,
+    // Replaces `positions` (below) in the "Current position" dropdown.
+    positions: ["PhD", "MTech", "BTech", "MSR", "Dual"],
+    tableNote: "30% discount on the base amounts",
+    note: "Includes a 30% IIT Delhi student discount on module fees",
+  },
+
   // Room/venue schedule for the register page (one row per room, one cell
   // per day), derived from each module's venue in js/programme-data.js.
   roomScheduleTime: "8:30am - 6:30pm",

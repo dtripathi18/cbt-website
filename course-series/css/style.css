@@ -230,6 +230,52 @@ a { color: var(--cs-accent-dark); }
   border-color: var(--cs-accent);
   box-shadow: 0 0 0 4px var(--cs-accent-soft);
 }
+/* Fixed values (Organization / Affiliation while "IIT Delhi student" is ticked). */
+.cs-field input[readonly],
+.cs-field select:disabled {
+  background: var(--cs-panel);
+  color: var(--cs-ink-soft);
+  cursor: not-allowed;
+}
+
+/* "IIT Delhi student" toggle under Organization - a checkbox (so it can be
+   unticked) drawn as a small radio dot. */
+.cs-field .cs-iitd-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+.cs-field .cs-iitd-toggle input {
+  -webkit-appearance: none;
+  appearance: none;
+  flex-shrink: 0;
+  display: grid;
+  place-content: center;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  border: 1.5px solid var(--cs-line-strong);
+  border-radius: 50%;
+  background: var(--cs-paper);
+  cursor: pointer;
+}
+.cs-field .cs-iitd-toggle input::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cs-accent);
+  transform: scale(0);
+  transition: transform 0.12s ease;
+}
+.cs-field .cs-iitd-toggle input:checked { border-color: var(--cs-accent); }
+.cs-field .cs-iitd-toggle input:checked::before { transform: scale(1); }
+.cs-field .cs-iitd-toggle input:focus { box-shadow: none; }
+.cs-field .cs-iitd-toggle input:focus-visible { box-shadow: 0 0 0 3px var(--cs-accent-soft); }
 
 .cs-phone-field {
   display: flex;
@@ -429,6 +475,7 @@ a { color: var(--cs-accent-dark); }
 #scheduleTable tbody td:first-child { white-space: nowrap; min-width: auto; font-size: 0.86rem; font-weight: 500; }
 .cs-schedule-code { display: inline; font-weight: 700; color: var(--cs-accent); }
 .cs-table-note { margin: 14px 0 0; color: var(--cs-ink-soft); font-size: 0.89rem; }
+.cs-fee-discount-note { margin: 8px 0 0; color: var(--cs-accent-dark); font-weight: 600; font-size: 0.92rem; }
 .cs-fee-warning { margin: 8px 0 0; color: var(--cs-danger); font-weight: 700; font-size: 0.92rem; }
 
 /* ---------- Bank details ---------- */

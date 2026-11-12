@@ -51,7 +51,9 @@
     .map(([label, value]) => `<div class="cs-bank-row"><span>${label}</span><strong>${value}</strong></div>`)
     .join("");
   // ---- Fee structure table (mirrors the figure on the live Google Form) ----
-  document.getElementById("feeTable").innerHTML = renderFeeTableHTML(cfg);
+  // Base fees only - the discount that applies (early bird or IIT Delhi
+  // student) is spelled out in #feeDiscountNote, kept current by recalculate().
+  document.getElementById("feeTable").innerHTML = renderFeeTableHTML(cfg, { discounted: false });
   document.getElementById("feeNote").textContent = cfg.feeNote;
   document.getElementById("feeWarning").textContent = cfg.feeWarning;
   document.getElementById("accommodationWarning").textContent = cfg.feeWarning;
@@ -82,16 +84,53 @@
     `<strong>Timing: ${cfg.roomScheduleTime} each day. Modules run in parallel across rooms - you can attend only one module per day (see "Choose Your Modules" below for full titles).</strong>`;
 
   // ---- Position dropdown (descriptive only, doesn't affect pricing) ----
+  // Its options depend on the IIT Delhi student option (see below).
   const positionSelect = document.getElementById("fPosition");
-  cfg.positions.forEach((label) => {
-    const opt = document.createElement("option");
-    opt.textContent = label;
-    positionSelect.appendChild(opt);
-  });
+  function fillPositions(labels) {
+    positionSelect.innerHTML = `<option value="" disabled selected>Select</option>`;
+    labels.forEach((label) => {
+      const opt = document.createElement("option");
+      opt.textContent = label;
+      positionSelect.appendChild(opt);
+    });
+  }
 
   // ---- Affiliation type (academia/industry) - this drives pricing ----
   const affiliationTypeSelect = document.getElementById("fAffiliationType");
   affiliationTypeSelect.addEventListener("change", recalculate);
+
+  // ---- IIT Delhi student option ----
+  // Ticking it fixes Organization to "IIT Delhi" (read-only), swaps the
+  // position list for IITD programmes, locks Affiliation to academia, and
+  // swaps the early bird discount for the permanent IITD student discount.
+  const iitd = cfg.iitdStudent;
+  const iitdCheckbox = document.getElementById("fIitdStudent");
+  const organizationInput = document.getElementById("fOrganization");
+  document.getElementById("iitdStudentLabel").textContent = iitd.label;
+  let typedOrganization = ""; // what they'd typed before ticking, restored on untick
+
+  function applyIitdState() {
+    const on = iitdCheckbox.checked;
+    organizationInput.readOnly = on;
+    fillPositions(on ? iitd.positions : cfg.positions);
+    if (on) affiliationTypeSelect.value = "academia";
+    affiliationTypeSelect.disabled = on;
+  }
+
+  iitdCheckbox.addEventListener("change", () => {
+    if (iitdCheckbox.checked) {
+      typedOrganization = organizationInput.value;
+      organizationInput.value = iitd.organization;
+    } else {
+      organizationInput.value = typedOrganization;
+    }
+    applyIitdState();
+    recalculate();
+  });
+
+  // The browser may restore a ticked box on back/refresh - sync to it.
+  if (iitdCheckbox.checked) organizationInput.value = iitd.organization;
+  applyIitdState();
 
   // ---- Days + modules ----
   const daysSection = document.getElementById("daysSection");
@@ -212,6 +251,7 @@
   const feeFinal = document.getElementById("feeFinal");
   let registrationFee = formatINR(0);
   const earlyBirdNote = document.getElementById("earlyBirdNote");
+  const feeDiscountNote = document.getElementById("feeDiscountNote");
 
   function recalculate() {
     const selectedCount = moduleCheckboxes.filter((m) => !m.isNone && m.checkbox.checked).length;
@@ -219,8 +259,13 @@
     const category = affiliationTypeSelect.value; // "academia" | "industry" | "" (not selected yet)
 
     const moduleFee = selectedCount > 0 && category ? (cfg.feeTiers[category][selectedCount] || 0) : 0;
-    const earlyBird = isEarlyBirdActive(cfg); // re-checked on every recalculation
-    const discountedModuleFee = applyEarlyBird(cfg, moduleFee);
+    // IITD students always get their own discount instead of the early bird;
+    // everyone else gets the early bird while it's open (re-checked each time).
+    const isIitd = iitdCheckbox.checked;
+    const earlyBird = !isIitd && isEarlyBirdActive(cfg);
+    const discountedModuleFee = isIitd
+      ? applyPercentOff(moduleFee, iitd.discountPercent)
+      : applyEarlyBird(cfg, moduleFee);
     const total = discountedModuleFee + accommodationTier.price;
     registrationFee = formatINR(total);
     feeFinal.textContent = registrationFee;
@@ -230,8 +275,12 @@
     feeOriginal.hidden = discountedModuleFee === moduleFee;
     feeOriginal.textContent = formatINR(moduleFee + accommodationTier.price);
 
-    earlyBirdNote.hidden = !earlyBird;
-    earlyBirdNote.textContent = cfg.earlyBird.note;
+    // Gradient note under the total, and the note under the fee table.
+    const hasDiscount = isIitd || earlyBird;
+    earlyBirdNote.hidden = !hasDiscount;
+    earlyBirdNote.textContent = isIitd ? iitd.note : cfg.earlyBird.note;
+    feeDiscountNote.hidden = !hasDiscount;
+    feeDiscountNote.textContent = isIitd ? iitd.tableNote : cfg.earlyBird.summary;
   }
 
   recalculate();
@@ -314,7 +363,8 @@
         gender: document.getElementById("fGender").value,
         contact: "+91" + document.getElementById("fContact").value,
         affiliationType: affiliationTypeSelect.value,
-        organization: document.getElementById("fOrganization").value,
+        organization: organizationInput.value,
+        iitdStudent: iitdCheckbox.checked ? "Yes" : "No",
         position: positionSelect.value,
         day1Code: selectedByDay[0].code,
         day1Title: selectedByDay[0].title,

@@ -47,9 +47,13 @@ function isEarlyBirdActive(cfg) {
   return Date.now() < new Date(cfg.earlyBird.endsAt).getTime();
 }
 
+function applyPercentOff(fee, percent) {
+  return Math.round(fee * (1 - percent / 100));
+}
+
 function applyEarlyBird(cfg, moduleFee) {
   return isEarlyBirdActive(cfg)
-    ? Math.round(moduleFee * (1 - cfg.earlyBird.discountPercent / 100))
+    ? applyPercentOff(moduleFee, cfg.earlyBird.discountPercent)
     : moduleFee;
 }
 
@@ -62,8 +66,11 @@ function renderFeeCellHTML(cfg, fee) {
 }
 
 // Fee tier table markup - shared by the register page and the about page so
-// the two never drift out of sync.
-function renderFeeTableHTML(cfg) {
+// the two never drift out of sync. Pass { discounted: false } to show the
+// base fees only (the register page explains discounts in a note instead,
+// since which one applies depends on the IIT Delhi student option).
+function renderFeeTableHTML(cfg, { discounted = true } = {}) {
+  const cell = (fee) => (discounted ? renderFeeCellHTML(cfg, fee) : formatINR(fee));
   const tierLabels = { 1: "Choose any one", 2: "Choose any two", 3: "Choose any three" };
   const moduleCount = cfg.days.reduce((sum, day) => sum + day.modules.length, 0);
   return `
@@ -74,8 +81,8 @@ function renderFeeTableHTML(cfg) {
       ${[1, 2, 3].map((n) => `
         <tr>
           <td>M1-M${moduleCount} (${tierLabels[n]})</td>
-          <td>${renderFeeCellHTML(cfg, cfg.feeTiers.academia[n])}</td>
-          <td>${renderFeeCellHTML(cfg, cfg.feeTiers.industry[n])}</td>
+          <td>${cell(cfg.feeTiers.academia[n])}</td>
+          <td>${cell(cfg.feeTiers.industry[n])}</td>
         </tr>
       `).join("")}
     </tbody>`;
