@@ -99,7 +99,7 @@ const COURSE_SERIES_CONFIG = {
   earlyBird: {
     discountPercent: 10,
     endsAt: "2026-11-17T00:00:00+05:30",
-    note: "Includes a 10% early bird discount on module fees, valid till 16 November 2026 (IST). Discount applied automatically at checkout.",
+    note: "Includes a 10% early bird discount on module fees, valid till 16 November 2026 (IST).",
     summary: "Early bird: Register by 16th November 2026 (IST) to avail 10% discount on module fees. Discount applied automatically at checkout.",
   },
 
@@ -114,8 +114,8 @@ const COURSE_SERIES_CONFIG = {
     // Replaces `positions` (below) in the "Current position" dropdown.
     positions: ["PhD", "MTech", "BTech", "MSR", "Dual"],
     emailPlaceholder: "Your student Email",
-    tableNote: "30% discount on the base amounts",
-    note: "Includes a 30% IIT Delhi student discount on module fees",
+    tableNote: "30% discount on the base amounts. Discount applied automatically at checkout.",
+    note: "Includes a 30% IIT Delhi student discount on module fees.",
   },
 
   // Room/venue schedule for the register page (one row per room, one cell
