@@ -101,17 +101,20 @@
 
   // ---- IIT Delhi student option ----
   // Ticking it fixes Organization to "IIT Delhi" (read-only), swaps the
-  // position list for IITD programmes, locks Affiliation to academia, and
-  // swaps the early bird discount for the permanent IITD student discount.
+  // position list for IITD programmes, locks Affiliation to academia, asks
+  // for their student email, and swaps the early bird discount for the
+  // permanent IITD student discount.
   const iitd = cfg.iitdStudent;
   const iitdCheckbox = document.getElementById("fIitdStudent");
   const organizationInput = document.getElementById("fOrganization");
+  const emailInput = document.getElementById("fEmail");
   document.getElementById("iitdStudentLabel").textContent = iitd.label;
   let typedOrganization = ""; // what they'd typed before ticking, restored on untick
 
   function applyIitdState() {
     const on = iitdCheckbox.checked;
     organizationInput.readOnly = on;
+    emailInput.placeholder = on ? iitd.emailPlaceholder : "";
     fillPositions(on ? iitd.positions : cfg.positions);
     if (on) affiliationTypeSelect.value = "academia";
     affiliationTypeSelect.disabled = on;
@@ -359,7 +362,7 @@
 
       payload = {
         name: document.getElementById("fName").value,
-        email: document.getElementById("fEmail").value,
+        email: emailInput.value,
         gender: document.getElementById("fGender").value,
         contact: "+91" + document.getElementById("fContact").value,
         affiliationType: affiliationTypeSelect.value,

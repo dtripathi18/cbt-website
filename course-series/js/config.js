@@ -113,6 +113,7 @@ const COURSE_SERIES_CONFIG = {
     discountPercent: 30,
     // Replaces `positions` (below) in the "Current position" dropdown.
     positions: ["PhD", "MTech", "BTech", "MSR", "Dual"],
+    emailPlaceholder: "Your student Email",
     tableNote: "30% discount on the base amounts",
     note: "Includes a 30% IIT Delhi student discount on module fees",
   },
