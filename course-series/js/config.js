@@ -99,8 +99,8 @@ const COURSE_SERIES_CONFIG = {
   earlyBird: {
     discountPercent: 10,
     endsAt: "2026-11-17T00:00:00+05:30",
-    note: "Includes a 10% early bird discount on module fees, valid till 16 November 2026 (IST)",
-    summary: "Early bird: Register by 16th November 2026 (IST) to avail 10% discount on module fees",
+    note: "Includes a 10% early bird discount on module fees, valid till 16 November 2026 (IST). Discount applied automatically at checkout.",
+    summary: "Early bird: Register by 16th November 2026 (IST) to avail 10% discount on module fees. Discount applied automatically at checkout.",
   },
 
   // IIT Delhi students (the "IIT Delhi student" option on the register page):
