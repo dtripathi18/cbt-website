@@ -160,8 +160,8 @@ const COURSE_SERIES_CONFIG = {
     collectionNote: "You can collect your ID card and course kits from 8 am onwards at the Registration kiosk on your module day",
   },
 
-  // Apps Script Web App (course-series/apps-script/Code.gs), deployed and
-  // bound to the registrations Sheet + Drive folder.
+  // Apps Script Web App bound to the registrations Sheet + Drive folder. Its
+  // code lives in the Sheet (Extensions > Apps Script), not in this repo.
   submitEndpointUrl: "https://script.google.com/macros/s/AKfycbzCtWk6GxocAL06RBOoSJ_fhPE6f-ILQ0Q2E_PlVrAW4VG9jrcm4619VAHYBb4sPrRa/exec",
 };
 // Room × day matrix: rooms sorted naturally (LHC 408, LHC 410, …), each
