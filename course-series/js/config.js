@@ -102,6 +102,18 @@ const COURSE_SERIES_CONFIG = {
     note: "Includes a 30% IIT Delhi student discount on module fees.",
   },
 
+  // Academic institutions in Delhi NCR (the second academia-only option on
+  // the register page): a flat % off the base module fee, academia tier.
+  // Requires front + back photos of the institution ID card. Accommodation
+  // stays undiscounted, and it doesn't stack with the IITD discount (the two
+  // options are mutually exclusive).
+  ncrInstitution: {
+    label: "Academic institution in Delhi NCR",
+    discountPercent: 10,
+    tableNote: "10% discount on the base amounts for Delhi NCR academic institutions. Discount applied automatically at checkout.",
+    note: "Includes a 10% Delhi NCR academic institution discount on module fees.",
+  },
+
   // Room/venue schedule for the register page (one row per room, one cell
   // per day), derived from each module's venue in js/programme-data.js.
   roomScheduleTime: "8:30am - 6:30pm",

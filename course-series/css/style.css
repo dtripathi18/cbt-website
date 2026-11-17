@@ -27,6 +27,9 @@
 }
 
 * { box-sizing: border-box; }
+/* The hidden attribute always wins. Otherwise a class that sets display
+   (e.g. .cs-discount-banner's flex) keeps an element visible while hidden. */
+[hidden] { display: none !important; }
 body {
   margin: 0;
   font-family: var(--cs-font);
@@ -276,6 +279,102 @@ a { color: var(--cs-accent-dark); }
 .cs-field .cs-iitd-toggle input:checked::before { transform: scale(1); }
 .cs-field .cs-iitd-toggle input:focus { box-shadow: none; }
 .cs-field .cs-iitd-toggle input:focus-visible { box-shadow: 0 0 0 3px var(--cs-accent-soft); }
+
+/* Academia-only options under Affiliation (IITD student / Delhi NCR institution). */
+.cs-academia-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+.cs-academia-options[hidden] { display: none; }
+
+/* Collapsible panel - grid rows animate 0fr -> 1fr so it slides open to its
+   natural height. */
+.cs-reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.3s ease, opacity 0.25s ease;
+}
+.cs-reveal--open { grid-template-rows: 1fr; opacity: 1; }
+.cs-reveal-inner { overflow: hidden; min-height: 0; }
+
+/* ID card upload boxes (front + back, side by side). */
+.cs-upload-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding-top: 10px;
+}
+.cs-upload { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.cs-upload-title { font-size: 0.86rem; font-weight: 500; color: var(--cs-ink); }
+.cs-field .cs-upload-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 85.6 / 54; /* standard ID card proportions */
+  padding: 8px;
+  border: 1.5px dashed var(--cs-line-strong);
+  border-radius: var(--cs-radius-sm);
+  background: var(--cs-paper);
+  color: var(--cs-ink-soft);
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.cs-field .cs-upload-box:hover,
+.cs-field .cs-upload-box--drag {
+  border-color: var(--cs-accent);
+  background: var(--cs-accent-soft);
+}
+.cs-field .cs-upload-box:focus-within { border-color: var(--cs-accent); box-shadow: 0 0 0 4px var(--cs-accent-soft); }
+.cs-field .cs-upload-box--filled { border-style: solid; padding: 4px 4px 26px; }
+/* The real file input stays in the box (invisible) so required-field
+   validation can still point at it. */
+.cs-field .cs-upload-box input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  padding: 0;
+  border: 0;
+  pointer-events: none;
+}
+.cs-upload-preview {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: contain;
+  border-radius: 6px;
+}
+.cs-upload-preview[hidden] { display: none; }
+.cs-upload-empty { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.cs-upload-icon { font-size: 1.4rem; color: var(--cs-accent); line-height: 1; }
+.cs-upload-box--filled .cs-upload-empty { display: none; }
+.cs-upload-name {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 5px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 420px) {
+  .cs-upload-grid { gap: 8px; }
+  .cs-upload-empty { font-size: 0.78rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cs-reveal { transition: none; }
+}
 
 .cs-phone-field {
   display: flex;

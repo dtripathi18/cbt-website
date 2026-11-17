@@ -134,20 +134,138 @@
     affiliationTypeSelect.disabled = on;
   }
 
-  iitdCheckbox.addEventListener("change", () => {
-    if (iitdCheckbox.checked) {
+  // Ticks/unticks the IITD option, keeping Organization in step with it.
+  function setIitd(checked) {
+    if (checked === iitdCheckbox.checked) return;
+    iitdCheckbox.checked = checked;
+    if (checked) {
       typedOrganization = organizationInput.value;
       organizationInput.value = iitd.organization;
     } else {
       organizationInput.value = typedOrganization;
     }
     applyIitdState();
+  }
+
+  iitdCheckbox.addEventListener("change", () => {
+    // Flip it back so setIitd() sees a real change and does the bookkeeping.
+    const want = iitdCheckbox.checked;
+    iitdCheckbox.checked = !want;
+    setIitd(want);
+    if (want) setNcr(false); // the two discounts don't stack
     recalculate();
   });
 
-  // The browser may restore a ticked box on back/refresh - sync to it.
+  // ---- Academic institution in Delhi NCR option ----
+  // Ticking it slides open two ID card upload boxes (front + back, both
+  // required) and applies the NCR discount. Unticking it collapses the
+  // boxes and clears whatever was uploaded.
+  const ncr = cfg.ncrInstitution;
+  const ncrCheckbox = document.getElementById("fNcrInstitution");
+  const idCardReveal = document.getElementById("idCardReveal");
+  document.getElementById("ncrInstitutionLabel").textContent = ncr.label;
+
+  // Each upload box: click to browse, or drag & drop an image onto it.
+  // Shows a small preview of the picked image.
+  const idCardUploads = ["fIdFront", "fIdBack"].map((id) => {
+    const input = document.getElementById(id);
+    const box = input.closest(".cs-upload-box");
+    const preview = box.querySelector(".cs-upload-preview");
+    const nameEl = box.querySelector(".cs-upload-name");
+    let previewUrl = null;
+
+    function render() {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      previewUrl = null;
+      const file = input.files[0];
+      if (file) {
+        previewUrl = URL.createObjectURL(file);
+        preview.src = previewUrl;
+      } else {
+        preview.removeAttribute("src");
+      }
+      preview.hidden = !file;
+      box.classList.toggle("cs-upload-box--filled", !!file);
+      nameEl.textContent = file ? file.name : "";
+    }
+
+    function clear() {
+      input.value = "";
+      render();
+    }
+
+    input.addEventListener("change", () => {
+      const file = input.files[0];
+      if (file && !file.type.startsWith("image/")) {
+        clear();
+        return;
+      }
+      render();
+    });
+
+    ["dragenter", "dragover"].forEach((type) =>
+      box.addEventListener(type, (e) => {
+        e.preventDefault();
+        box.classList.add("cs-upload-box--drag");
+      })
+    );
+    ["dragleave", "dragend"].forEach((type) =>
+      box.addEventListener(type, () => box.classList.remove("cs-upload-box--drag"))
+    );
+    box.addEventListener("drop", (e) => {
+      e.preventDefault();
+      box.classList.remove("cs-upload-box--drag");
+      const file = [...e.dataTransfer.files].find((f) => f.type.startsWith("image/"));
+      if (!file) return;
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      input.files = dt.files;
+      render();
+    });
+
+    return { input, clear };
+  });
+
+  function applyNcrState() {
+    const on = ncrCheckbox.checked;
+    idCardReveal.classList.toggle("cs-reveal--open", on);
+    idCardReveal.inert = !on; // collapsed boxes can't be tabbed into
+    idCardUploads.forEach((u) => {
+      u.input.required = on;
+      if (!on) u.clear();
+    });
+  }
+
+  function setNcr(checked) {
+    if (checked === ncrCheckbox.checked) return;
+    ncrCheckbox.checked = checked;
+    applyNcrState();
+  }
+
+  ncrCheckbox.addEventListener("change", () => {
+    applyNcrState();
+    if (ncrCheckbox.checked) setIitd(false); // the two discounts don't stack
+    recalculate();
+  });
+
+  // ---- Academia-only options: shown only once Affiliation is Academia ----
+  const academiaOptions = document.getElementById("academiaOptions");
+  function applyAffiliationState() {
+    const isAcademia = affiliationTypeSelect.value === "academia";
+    academiaOptions.hidden = !isAcademia;
+    if (!isAcademia) {
+      setIitd(false);
+      setNcr(false);
+    }
+  }
+  affiliationTypeSelect.addEventListener("change", applyAffiliationState);
+
+  // The browser may restore ticked boxes on back/refresh - sync to them.
+  if (iitdCheckbox.checked && ncrCheckbox.checked) ncrCheckbox.checked = false;
   if (iitdCheckbox.checked) organizationInput.value = iitd.organization;
   applyIitdState();
+  applyNcrState();
+  applyAffiliationState();
 
   // ---- Days + modules ----
   const daysSection = document.getElementById("daysSection");
@@ -276,10 +394,10 @@
     const category = affiliationTypeSelect.value; // "academia" | "industry" | "" (not selected yet)
 
     const moduleFee = selectedCount > 0 && category ? (cfg.feeTiers[category][selectedCount] || 0) : 0;
-    // Only IITD students get a discount.
-    const isIitd = iitdCheckbox.checked;
-    const discountedModuleFee = isIitd
-      ? applyPercentOff(moduleFee, iitd.discountPercent)
+    // At most one discount applies: IITD students, or Delhi NCR institutions.
+    const discount = iitdCheckbox.checked ? iitd : ncrCheckbox.checked ? ncr : null;
+    const discountedModuleFee = discount
+      ? applyPercentOff(moduleFee, discount.discountPercent)
       : moduleFee;
     const total = discountedModuleFee + accommodationTier.price;
     registrationFee = formatINR(total);
@@ -291,10 +409,10 @@
     feeOriginal.textContent = formatINR(moduleFee + accommodationTier.price);
 
     // Gradient note under the total, and the note under the fee table.
-    discountNote.hidden = !isIitd;
-    discountNote.textContent = isIitd ? iitd.note : "";
-    feeDiscountNote.hidden = !isIitd;
-    feeDiscountNote.textContent = isIitd ? iitd.tableNote : "";
+    discountNote.hidden = !discount;
+    discountNote.textContent = discount ? discount.note : "";
+    feeDiscountNote.hidden = !discount;
+    feeDiscountNote.textContent = discount ? discount.tableNote : "";
   }
 
   recalculate();
@@ -366,6 +484,12 @@
       const screenshotFile = document.getElementById("fScreenshot").files[0];
       const screenshotBase64 = screenshotFile ? await readFileAsBase64(screenshotFile) : "";
 
+      // ID card photos - only sent for the Delhi NCR institution option.
+      const isNcr = ncrCheckbox.checked;
+      const [idFrontFile, idBackFile] = idCardUploads.map((u) => (isNcr && u.input.files[0]) || null);
+      const idFrontBase64 = idFrontFile ? await readFileAsBase64(idFrontFile) : "";
+      const idBackBase64 = idBackFile ? await readFileAsBase64(idBackFile) : "";
+
       const selectedByDay = cfg.days.map((day, i) => {
         const picked = moduleCheckboxes.find((m) => m.dayIndex === i && !m.isNone && m.checkbox.checked);
         return picked ? { code: picked.code, title: picked.title } : { code: "", title: "" };
@@ -379,6 +503,13 @@
         affiliationType: affiliationTypeSelect.value,
         organization: organizationInput.value,
         iitdStudent: iitdCheckbox.checked ? "Yes" : "No",
+        ncrInstitution: isNcr ? "Yes" : "No",
+        idCardFrontBase64: idFrontBase64,
+        idCardFrontFilename: idFrontFile ? idFrontFile.name : "",
+        idCardFrontMimeType: idFrontFile ? idFrontFile.type : "",
+        idCardBackBase64: idBackBase64,
+        idCardBackFilename: idBackFile ? idBackFile.name : "",
+        idCardBackMimeType: idBackFile ? idBackFile.type : "",
         position: positionSelect.value,
         day1Code: selectedByDay[0].code,
         day1Title: selectedByDay[0].title,

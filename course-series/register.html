@@ -11,7 +11,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16.png" />
 <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png" />
-<link rel="stylesheet" href="css/style.css?v=2026-11-12" />
+<link rel="stylesheet" href="css/style.css?v=2026-11-17b" />
 </head>
 <body>
 
@@ -71,14 +71,52 @@
               <option value="academia">Academia</option>
               <option value="industry">Industry</option>
             </select>
+            <!-- Academia-only options: register.js reveals them once Academia is picked. -->
+            <div class="cs-academia-options" id="academiaOptions" hidden>
+              <label class="cs-iitd-toggle" for="fIitdStudent">
+                <input id="fIitdStudent" name="iitdStudent" type="checkbox" />
+                <span id="iitdStudentLabel"></span>
+              </label>
+              <label class="cs-iitd-toggle" for="fNcrInstitution">
+                <input id="fNcrInstitution" name="ncrInstitution" type="checkbox" />
+                <span id="ncrInstitutionLabel"></span>
+              </label>
+            </div>
+            <!-- ID card uploads for "Academic institution in Delhi NCR" (slides open when ticked). -->
+            <div class="cs-reveal" id="idCardReveal">
+              <div class="cs-reveal-inner">
+                <div class="cs-upload-grid">
+                  <div class="cs-upload">
+                    <span class="cs-upload-title" id="idFrontTitle">Front of institution ID card <span class="cs-req">*</span></span>
+                    <label class="cs-upload-box" for="fIdFront">
+                      <input id="fIdFront" name="idCardFront" type="file" accept="image/*" aria-labelledby="idFrontTitle" />
+                      <img class="cs-upload-preview" alt="Preview of the front of your ID card" hidden />
+                      <span class="cs-upload-empty">
+                        <span class="cs-upload-icon" aria-hidden="true">&#8682;</span>
+                        <span>Drag &amp; drop or <u>browse</u></span>
+                      </span>
+                      <span class="cs-upload-name"></span>
+                    </label>
+                  </div>
+                  <div class="cs-upload">
+                    <span class="cs-upload-title" id="idBackTitle">Back of institution ID card <span class="cs-req">*</span></span>
+                    <label class="cs-upload-box" for="fIdBack">
+                      <input id="fIdBack" name="idCardBack" type="file" accept="image/*" aria-labelledby="idBackTitle" />
+                      <img class="cs-upload-preview" alt="Preview of the back of your ID card" hidden />
+                      <span class="cs-upload-empty">
+                        <span class="cs-upload-icon" aria-hidden="true">&#8682;</span>
+                        <span>Drag &amp; drop or <u>browse</u></span>
+                      </span>
+                      <span class="cs-upload-name"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="cs-field">
             <label for="fOrganization">Organization <span class="cs-req">*</span></label>
             <input id="fOrganization" name="organization" type="text" required />
-            <label class="cs-iitd-toggle" for="fIitdStudent">
-              <input id="fIitdStudent" name="iitdStudent" type="checkbox" />
-              <span id="iitdStudentLabel"></span>
-            </label>
           </div>
           <div class="cs-field">
             <label for="fPosition">Current position <span class="cs-req">*</span></label>
@@ -182,8 +220,8 @@
 </main>
 
 <script src="js/programme-data.js?v=20261111123956"></script>
-<script src="js/config.js?v=2026-11-12"></script>
+<script src="js/config.js?v=2026-11-17"></script>
 <script src="js/shared.js?v=2026-11-12"></script>
-<script src="js/register.js?v=2026-11-12"></script>
+<script src="js/register.js?v=2026-11-17"></script>
 </body>
 </html>
