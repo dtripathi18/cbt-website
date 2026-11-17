@@ -34,15 +34,10 @@ const COURSE_SERIES_CONFIG = {
         body: "Faculty members, research scholars and postgraduate students engaged in biopharmaceutical sciences, biotechnology, pharmaceutical sciences and related disciplines",
       },
     ],
-    // Each point is an HTML string, or { html, earlyBirdOnly: true } for one
-    // that stops rendering once `earlyBird.endsAt` (below) has passed.
+    // Each point is an HTML string.
     highlights: [
       "3 days of live interactive sessions",
       "15 specialized modules shaping the future of next-gen bioprocessing, biotherapeutics, regulatory framework and advanced data analytics",
-      {
-        html: '🎁 Early Bird Offer: Register by 16th November (IST) to avail <mark class="cs-highlight-mark">10% discount</mark> on module fees',
-        earlyBirdOnly: true,
-      },
     ],
   },
 
@@ -93,20 +88,9 @@ const COURSE_SERIES_CONFIG = {
   feeNote: "Fees mentioned above are inclusive of 18% GST",
   feeWarning: "*Fee once paid is non-refundable",
 
-  // Early bird: % off the module fee (accommodation is added undiscounted on
-  // top). Applies through the end of 16 Nov IST, so it switches off at
-  // midnight IST going into 17 Nov.
-  earlyBird: {
-    discountPercent: 10,
-    endsAt: "2026-11-17T00:00:00+05:30",
-    note: "Includes a 10% early bird discount on module fees, valid till 16 November 2026 (IST).",
-    summary: "Early bird: Register by 16th November 2026 (IST) to avail 10% discount on module fees. Discount applied automatically at checkout.",
-  },
-
   // IIT Delhi students (the "IIT Delhi student" option on the register page):
-  // a flat % off the base module fee that, unlike the early bird, never
-  // expires. It replaces the early bird discount rather than stacking with it,
-  // and is priced on the academia tier. Accommodation stays undiscounted.
+  // a flat % off the base module fee, priced on the academia tier.
+  // Accommodation stays undiscounted.
   iitdStudent: {
     label: "I am an IIT Delhi student",
     organization: "IIT Delhi",

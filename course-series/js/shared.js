@@ -40,37 +40,15 @@ function initMainSiteLinks(cfg) {
   if (footerLink) footerLink.href = cfg.site.mainSiteUrl;
 }
 
-// Early bird window / discount - shared so the fee tables and the register
-// page's live total always agree. Checked at call time (not once at load) so
-// a page left open past the cutoff stops applying the discount.
-function isEarlyBirdActive(cfg) {
-  return Date.now() < new Date(cfg.earlyBird.endsAt).getTime();
-}
-
 function applyPercentOff(fee, percent) {
   return Math.round(fee * (1 - percent / 100));
 }
 
-function applyEarlyBird(cfg, moduleFee) {
-  return isEarlyBirdActive(cfg)
-    ? applyPercentOff(moduleFee, cfg.earlyBird.discountPercent)
-    : moduleFee;
-}
-
-// One fee cell: the struck-through original beside the discounted fee while
-// the early bird offer is open, otherwise just the plain fee.
-function renderFeeCellHTML(cfg, fee) {
-  const discounted = applyEarlyBird(cfg, fee);
-  if (discounted === fee) return formatINR(fee);
-  return `<s class="cs-fee-original">${formatINR(fee)}</s> <span class="cs-fee-final">${formatINR(discounted)}</span>`;
-}
-
 // Fee tier table markup - shared by the register page and the about page so
-// the two never drift out of sync. Pass { discounted: false } to show the
-// base fees only (the register page explains discounts in a note instead,
-// since which one applies depends on the IIT Delhi student option).
-function renderFeeTableHTML(cfg, { discounted = true } = {}) {
-  const cell = (fee) => (discounted ? renderFeeCellHTML(cfg, fee) : formatINR(fee));
+// the two never drift out of sync. Shows the base fees only (the register
+// page explains the IIT Delhi student discount in a note instead).
+function renderFeeTableHTML(cfg) {
+  const cell = (fee) => formatINR(fee);
   const tierLabels = { 1: "Choose any one", 2: "Choose any two", 3: "Choose any three" };
   const moduleCount = cfg.days.reduce((sum, day) => sum + day.modules.length, 0);
   return `

@@ -348,7 +348,7 @@ a { color: var(--cs-accent-dark); }
   color: var(--cs-accent-dark);
 }
 
-.cs-early-bird {
+.cs-discount-banner {
   display: flex;
   align-items: flex-start;
   gap: 9px;
@@ -362,7 +362,7 @@ a { color: var(--cs-accent-dark); }
   font-weight: 500;
   line-height: 1.45;
 }
-.cs-early-bird::before {
+.cs-discount-banner::before {
   content: "\2726"; /* ✦ */
   flex-shrink: 0;
   color: var(--cs-accent);
@@ -465,9 +465,6 @@ a { color: var(--cs-accent-dark); }
 .cs-fee-table tbody td:not(:first-child) { font-weight: 700; }
 #feeTable th:not(:first-child),
 #feeTable td:not(:first-child) { text-align: center; }
-/* Early bird: struck-through original beside the discounted fee. */
-.cs-fee-table .cs-fee-original { margin-right: 6px; font-size: 0.9rem; }
-.cs-fee-table .cs-fee-final { font-size: inherit; }
 
 #scheduleTable th,
 #scheduleTable td { white-space: normal; font-size: 0.8rem; line-height: 1.4; padding: 9px 12px; min-width: 130px; }
@@ -726,7 +723,6 @@ a { color: var(--cs-accent-dark); }
 #aboutAccommodationTable td:not(:first-child) { text-align: center; }
 .cs-tab-card + .cs-tab-card { margin-top: 24px; }
 .cs-tab-subhead { margin: 0 0 14px; font-size: 1.1rem; }
-.cs-tab-card .cs-early-bird { margin-top: 12px; }
 
 /* ---------- About page: curriculum accordions ---------- */
 .cs-cday {

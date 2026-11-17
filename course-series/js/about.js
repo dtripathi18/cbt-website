@@ -13,11 +13,8 @@
   document.getElementById("aboutIntro").textContent = cfg.intro.body;
 
   const highlightsList = document.getElementById("aboutHighlights");
-  const earlyBirdOpen = Date.now() < new Date(cfg.earlyBird.endsAt).getTime();
   cfg.about.highlights.forEach((point) => {
-    if (typeof point === "string") point = { html: point };
-    if (point.earlyBirdOnly && !earlyBirdOpen) return;
-    highlightsList.appendChild(el("li", null, point.html));
+    highlightsList.appendChild(el("li", null, point));
   });
 
   const brochureLink = document.getElementById("aboutBrochureLink");
@@ -138,11 +135,6 @@
       `).join("")}
     </tbody>`;
   document.getElementById("aboutAccommodationNote").textContent = cfg.accommodationNote;
-  const earlyBirdNote = document.getElementById("aboutEarlyBird");
-  if (earlyBirdOpen) {
-    earlyBirdNote.textContent = cfg.earlyBird.summary;
-    earlyBirdNote.hidden = false;
-  }
 
   // ---- Speakers, styled after the brochure's speaker list: bold uppercase
   // "FIRSTNAME LASTNAME", in alphabetical order of the name as shown. Photo
