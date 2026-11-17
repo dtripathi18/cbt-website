@@ -111,10 +111,25 @@
   document.getElementById("iitdStudentLabel").textContent = iitd.label;
   let typedOrganization = ""; // what they'd typed before ticking, restored on untick
 
+  // IITD students must register with their institute email (anything ending
+  // in "iitd.ac.in", e.g. name@iitd.ac.in or name@cse.iitd.ac.in). Uses the
+  // browser's constraint validation, so the submit handler's
+  // checkValidity()/reportValidity() blocks the form and shows the message.
+  const IITD_EMAIL_SUFFIX = "iitd.ac.in";
+  function validateIitdEmail() {
+    const value = emailInput.value.trim().toLowerCase();
+    const invalid = iitdCheckbox.checked && value !== "" && !value.endsWith(IITD_EMAIL_SUFFIX);
+    emailInput.setCustomValidity(
+      invalid ? `IIT Delhi students must use their IITD email address (ending in "${IITD_EMAIL_SUFFIX}").` : ""
+    );
+  }
+  emailInput.addEventListener("input", validateIitdEmail);
+
   function applyIitdState() {
     const on = iitdCheckbox.checked;
     organizationInput.readOnly = on;
     emailInput.placeholder = on ? iitd.emailPlaceholder : "";
+    validateIitdEmail();
     fillPositions(on ? iitd.positions : cfg.positions);
     if (on) affiliationTypeSelect.value = "academia";
     affiliationTypeSelect.disabled = on;
