@@ -152,7 +152,10 @@
     const want = iitdCheckbox.checked;
     iitdCheckbox.checked = !want;
     setIitd(want);
-    if (want) setNcr(false); // the two discounts don't stack
+    if (want) {
+      setNcr(false); // the two discounts don't stack
+      outsideNcrCheckbox.checked = false;
+    }
     recalculate();
   });
 
@@ -244,7 +247,22 @@
 
   ncrCheckbox.addEventListener("change", () => {
     applyNcrState();
-    if (ncrCheckbox.checked) setIitd(false); // the two discounts don't stack
+    if (ncrCheckbox.checked) {
+      setIitd(false); // the two discounts don't stack
+      outsideNcrCheckbox.checked = false;
+    }
+    recalculate();
+  });
+
+  // ---- Academic institution outside Delhi NCR option ----
+  // The no-discount academia choice. Mutually exclusive with the other two.
+  const outsideNcrCheckbox = document.getElementById("fOutsideNcr");
+  document.getElementById("outsideNcrLabel").textContent = cfg.outsideNcrInstitution.label;
+  outsideNcrCheckbox.addEventListener("change", () => {
+    if (outsideNcrCheckbox.checked) {
+      setIitd(false);
+      setNcr(false);
+    }
     recalculate();
   });
 
@@ -256,12 +274,25 @@
     if (!isAcademia) {
       setIitd(false);
       setNcr(false);
+      outsideNcrCheckbox.checked = false;
     }
+    validateAcademiaChoice();
   }
   affiliationTypeSelect.addEventListener("change", applyAffiliationState);
 
+  // Academia registrants must pick exactly one of the three options. Uses
+  // constraint validation on the first option so the submit handler's
+  // checkValidity()/reportValidity() blocks the form and points at it.
+  function validateAcademiaChoice() {
+    const missing =
+      affiliationTypeSelect.value === "academia" &&
+      !iitdCheckbox.checked && !ncrCheckbox.checked && !outsideNcrCheckbox.checked;
+    iitdCheckbox.setCustomValidity(missing ? "Please select one of the academic institution options." : "");
+  }
+
   // The browser may restore ticked boxes on back/refresh - sync to them.
   if (iitdCheckbox.checked && ncrCheckbox.checked) ncrCheckbox.checked = false;
+  if (outsideNcrCheckbox.checked && (iitdCheckbox.checked || ncrCheckbox.checked)) outsideNcrCheckbox.checked = false;
   if (iitdCheckbox.checked) organizationInput.value = iitd.organization;
   applyIitdState();
   applyNcrState();
@@ -413,6 +444,8 @@
     discountNote.textContent = discount ? discount.note : "";
     feeDiscountNote.hidden = !discount;
     feeDiscountNote.textContent = discount ? discount.tableNote : "";
+
+    validateAcademiaChoice();
   }
 
   recalculate();

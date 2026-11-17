@@ -114,6 +114,13 @@ const COURSE_SERIES_CONFIG = {
     note: "Includes a 10% Delhi NCR academic institution discount on module fees.",
   },
 
+  // Academic institutions outside Delhi NCR (the third academia-only option):
+  // no discount - plain academia pricing. Academia registrants must pick one
+  // of the three options.
+  outsideNcrInstitution: {
+    label: "Academic Institute Outside Delhi NCR",
+  },
+
   // Room/venue schedule for the register page (one row per room, one cell
   // per day), derived from each module's venue in js/programme-data.js.
   roomScheduleTime: "8:30am - 6:30pm",
