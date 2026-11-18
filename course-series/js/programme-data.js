@@ -17,7 +17,9 @@ const PROGRAMME_DATA = {
             "ranil-wickramasinghe",
             "james-gomes",
             "sanjeev-gupta",
-            "dhananjay-patankar"
+            "dhananjay-patankar",
+            "loganathan-thangaselvam",
+            "suraj-gupta"
           ]
         },
         {
@@ -438,6 +440,20 @@ const PROGRAMME_DATA = {
       "id": "ankit-kanthe",
       "name": "Ankit Kanthe",
       "affiliation": "Bristol Myers Squibb",
+      "image": "",
+      "description": ""
+    },
+    {
+      "id": "loganathan-thangaselvam",
+      "name": "Loganathan Thangaselvam",
+      "affiliation": "Sartorius",
+      "image": "",
+      "description": ""
+    },
+    {
+      "id": "suraj-gupta",
+      "name": "Suraj Gupta",
+      "affiliation": "Sartorius",
       "image": "",
       "description": ""
     }
