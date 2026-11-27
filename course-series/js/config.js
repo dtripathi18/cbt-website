@@ -178,6 +178,42 @@ const COURSE_SERIES_CONFIG = {
     collectionNote: "You can collect your ID card and course kits from 8 am onwards at the Registration kiosk on your module day",
   },
 
+  // feedback.html - the end-of-day feedback form (replaces the old Google
+  // Form). The link goes out at the end of each day, so the page only lists
+  // that day's modules.
+  feedback: {
+    // CHANGE THIS EACH DAY before sharing the link: 1, 2 or 3 picks which
+    // day's modules (from js/programme-data.js) the page lists.
+    activeDay: 1,
+    heading: "Course Feedback",
+    body: 'Thank you for participating in "CBT Course Series 2026" from 8th - 10th Dec 2026. Please share your feedback on today\'s module.',
+    // "Last attended" dropdown runs from this year up to the year before
+    // the event (the event year comes from the first day's date).
+    firstEditionYear: 2014,
+    ratingHint: "Please rate the following based on your experience at the CBT Course Series 2026",
+    ratingScale: ["Very Satisfied", "Satisfied", "Average", "Not Satisfied"],
+    // `key` is the field name sent to the Sheet - keep it stable once
+    // responses are coming in; `label` can be reworded freely.
+    ratingRows: [
+      { key: "registration", label: "Process of registration" },
+      { key: "talks", label: "Quality and content of the scientific talks" },
+      { key: "stayTravel", label: "Stay and travel" },
+      { key: "food", label: "Food arrangements" },
+      { key: "expectations", label: "How did the sessions compare to your expectations?" },
+      { key: "timeManagement", label: "Time management of talks" },
+      { key: "venue", label: "Event venue" },
+      { key: "demo", label: "Demo experience" },
+      { key: "overall", label: "Overall event rating" },
+    ],
+    enjoyedLabel: "Which topics and talks did you enjoy the most at the CBT Course Series 2026?",
+    thankYouMessage: [
+      "Thank you for your feedback!",
+      "We hope to see you again at the next CBT Course Series.",
+      "CBT Team",
+    ],
+    endpointUrl: "https://script.google.com/macros/s/AKfycbypW7vRxVU5SEEOki9hfdt9PDEhBJXtr-AlBiOjSbGfJzCQO2WD2WBdzO2URZQHErUe/exec",
+  },
+
   // Apps Script Web App bound to the registrations Sheet + Drive folder. Its
   // code lives in the Sheet (Extensions > Apps Script), not in this repo.
   submitEndpointUrl: "https://script.google.com/macros/s/AKfycbzCtWk6GxocAL06RBOoSJ_fhPE6f-ILQ0Q2E_PlVrAW4VG9jrcm4619VAHYBb4sPrRa/exec",
